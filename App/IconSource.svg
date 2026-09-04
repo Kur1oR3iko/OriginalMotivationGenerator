@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#FFFFFF"/>
+  <text
+    x="512"
+    y="528"
+    fill="#000000"
+    font-family="PingFang SC, Hiragino Sans GB, sans-serif"
+    font-size="700"
+    font-weight="900"
+    text-anchor="middle"
+    dominant-baseline="central"
+  >蛤</text>
+</svg>
