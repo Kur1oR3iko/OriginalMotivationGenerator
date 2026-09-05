@@ -8,14 +8,22 @@ mkdir -p build-legacy
 for arch in armv7 arm64; do
     minimum=6.0
     if [ "$arch" = arm64 ]; then minimum=7.0; fi
+    for source in main OMGGenerator; do
+        "$LEGACY_BIN/clang" \
+            -target "$arch-apple-ios$minimum" \
+            -isysroot "$LEGACY_SDK" \
+            -miphoneos-version-min="$minimum" \
+            -fobjc-arc -fblocks -Os \
+            -Wall -Wextra -Werror=unguarded-availability \
+            -Wno-unused-parameter \
+            -c "LegacyApp/$source.m" -o "build-legacy/$source-$arch.o"
+    done
+    # iOS 6 provides the ARC operations used here. Link the compiled objects
+    # directly without asking the driver for the unavailable libarclite shim.
     "$LEGACY_BIN/clang" \
-        -target "$arch-apple-ios$minimum" \
-        -isysroot "$LEGACY_SDK" \
+        -target "$arch-apple-ios$minimum" -isysroot "$LEGACY_SDK" \
         -miphoneos-version-min="$minimum" \
-        -fobjc-arc -fno-objc-link-runtime -fblocks -Os \
-        -Wall -Wextra -Werror=unguarded-availability \
-        -Wno-unused-parameter \
-        LegacyApp/main.m LegacyApp/OMGGenerator.m \
+        "build-legacy/main-$arch.o" "build-legacy/OMGGenerator-$arch.o" \
         -framework UIKit -framework Foundation -lobjc \
         -o "build-legacy/app-$arch"
 done
