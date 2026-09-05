@@ -15,7 +15,7 @@
 
 ### GitHub Actions
 
-仓库增加了 `Build iOS 6-14 Legacy` 工作流。推送到 `codex/ios6-14-legacy` 分支且修改相关源码时触发，也可手动触发。它在 Ubuntu 22.04 上下载固定版本的 Theos 生态交叉工具链和固定提交的 iOS 9.3 SDK，分别编译 armv7（最低 iOS 6.0）及 arm64（最低 iOS 7.0），再合并为通用二进制。
+仓库增加了 `Build iOS 6-14 Legacy` 工作流。推送到 `codex/ios6-14-legacy` 分支且修改相关源码时触发，也可手动触发。它在 Ubuntu 22.04 上下载固定版本并校验 SHA-256 的 Theos 生态交叉工具链和固定提交的 iOS 10.3 SDK，分别编译 armv7（最低 iOS 6.0）及 arm64（最低 iOS 7.0），再合并为通用二进制。SDK 版本与最低运行系统版本不同；代码必须继续只使用最低版本已有的 API。
 
 流程会解析 Mach-O，检查真实架构、最低系统版本和动态库路径，然后上传 **未签名 IPA** 与 `verification.json`。该 IPA 需要另行签名才能正常安装；工作流不读取签名证书。构建成功不等于真机验证通过。
 

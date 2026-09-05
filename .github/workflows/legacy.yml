@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install host dependencies
         run: sudo apt-get update && sudo apt-get install -y libtinfo5 libtinfo6 libxml2 zip
-      - name: Fetch pinned cross compiler and iOS 9.3 SDK
+      - name: Fetch pinned cross compiler and iOS 10.3 SDK
         shell: bash
         run: |
           set -euo pipefail
@@ -29,17 +29,17 @@ jobs:
           curl --fail --location --retry 3 \
             https://github.com/L1ghtmann/llvm-project/releases/download/test-210562a/iOSToolchain-x86_64.tar.xz \
             -o "$RUNNER_TEMP/toolchain.tar.xz"
-          sha256sum "$RUNNER_TEMP/toolchain.tar.xz"
+          echo "a72a7a577e2fbe2838b6b5e9c72034fa7d114af96f0e1d4b016f18730ce4056e  $RUNNER_TEMP/toolchain.tar.xz" | sha256sum --check
           tar -xJf "$RUNNER_TEMP/toolchain.tar.xz" -C "$RUNNER_TEMP/legacy-toolchain"
           git init "$RUNNER_TEMP/legacy-sdks"
           git -C "$RUNNER_TEMP/legacy-sdks" remote add origin https://github.com/theos/sdks.git
-          git -C "$RUNNER_TEMP/legacy-sdks" sparse-checkout set iPhoneOS9.3.sdk
+          git -C "$RUNNER_TEMP/legacy-sdks" sparse-checkout set iPhoneOS10.3.sdk
           git -C "$RUNNER_TEMP/legacy-sdks" fetch --depth=1 origin 0222fd5413cf4b9af096f37b4621afa2688572f7
           git -C "$RUNNER_TEMP/legacy-sdks" checkout --detach FETCH_HEAD
           compiler=$(find "$RUNNER_TEMP/legacy-toolchain" -path '*/bin/clang' -print -quit)
           test -x "$compiler"
           echo "LEGACY_BIN=$(dirname "$compiler")" >> "$GITHUB_ENV"
-          echo "LEGACY_SDK=$RUNNER_TEMP/legacy-sdks/iPhoneOS9.3.sdk" >> "$GITHUB_ENV"
+          echo "LEGACY_SDK=$RUNNER_TEMP/legacy-sdks/iPhoneOS10.3.sdk" >> "$GITHUB_ENV"
       - name: Compile both device architectures
         run: bash tools/build_legacy_ci.sh
       - name: Verify binaries and package unsigned IPA

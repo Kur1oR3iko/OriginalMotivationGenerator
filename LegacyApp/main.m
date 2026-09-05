@@ -48,7 +48,7 @@
     return YES;
 }
 - (BOOL)shouldAutorotate { return YES; }
-- (NSUInteger)supportedInterfaceOrientations { return UIInterfaceOrientationMaskLandscape; }
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations { return UIInterfaceOrientationMaskLandscape; }
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation { return UIInterfaceOrientationLandscapeLeft; }
 - (BOOL)prefersStatusBarHidden { return YES; }
 @end
