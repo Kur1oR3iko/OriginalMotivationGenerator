@@ -24,7 +24,7 @@ for arch in armv7 arm64; do
         -target "$arch-apple-ios$minimum" -isysroot "$LEGACY_SDK" \
         -miphoneos-version-min="$minimum" \
         "build-legacy/main-$arch.o" "build-legacy/OMGGenerator-$arch.o" \
-        -framework UIKit -framework Foundation -lobjc \
+        -framework UIKit -framework Foundation -framework CoreGraphics -lobjc \
         -o "build-legacy/app-$arch"
 done
 "$LEGACY_BIN/lipo" -create build-legacy/app-armv7 build-legacy/app-arm64 \

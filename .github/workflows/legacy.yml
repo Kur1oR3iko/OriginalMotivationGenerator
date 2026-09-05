@@ -32,9 +32,9 @@ jobs:
           echo "a72a7a577e2fbe2838b6b5e9c72034fa7d114af96f0e1d4b016f18730ce4056e  $RUNNER_TEMP/toolchain.tar.xz" | sha256sum --check
           tar -xJf "$RUNNER_TEMP/toolchain.tar.xz" -C "$RUNNER_TEMP/legacy-toolchain"
           git init "$RUNNER_TEMP/legacy-sdks"
-          git -C "$RUNNER_TEMP/legacy-sdks" remote add origin https://github.com/theos/sdks.git
+          git -C "$RUNNER_TEMP/legacy-sdks" remote add origin https://github.com/xybp888/iOS-SDKs.git
           git -C "$RUNNER_TEMP/legacy-sdks" sparse-checkout set iPhoneOS10.3.sdk
-          git -C "$RUNNER_TEMP/legacy-sdks" fetch --depth=1 origin 0222fd5413cf4b9af096f37b4621afa2688572f7
+          git -C "$RUNNER_TEMP/legacy-sdks" fetch --depth=1 --filter=blob:none origin 1b92ff4a8928f582876e1d388d1381c6a0c59eb9
           git -C "$RUNNER_TEMP/legacy-sdks" checkout --detach FETCH_HEAD
           compiler=$(find "$RUNNER_TEMP/legacy-toolchain" -path '*/bin/clang' -print -quit)
           test -x "$compiler"
