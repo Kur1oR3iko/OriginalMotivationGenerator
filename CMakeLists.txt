@@ -10,6 +10,8 @@ set(APP_ROOT "${CMAKE_SOURCE_DIR}/App")
 set(APP_SOURCES
     "${APP_ROOT}/OriginalMotivationGeneratorApp.swift"
     "${APP_ROOT}/ContentView.swift"
+    "${APP_ROOT}/SettingsView.swift"
+    "${APP_ROOT}/ThreeFingerSwipe.swift"
     "${APP_ROOT}/KurioPhraseGenerator.swift"
 )
 

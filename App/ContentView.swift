@@ -3,11 +3,50 @@ import UIKit
 
 struct ContentView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
+    @AppStorage("originalMotivationGenerator.v1.autoAdvanceEnabled") private var autoAdvanceEnabled = false
+    @AppStorage("originalMotivationGenerator.v1.autoAdvanceInterval") private var autoAdvanceInterval = 5.0
     @State private var phrase = KurioPhraseGenerator.lastPhrase ?? KurioPhraseGenerator.next()
+    @State private var showingSettings = false
+    @State private var generation = 0
 
     private var phraseText: String { phrase?.text ?? "全部组合已生成完毕" }
 
     var body: some View {
+        ZStack {
+            if showingSettings {
+                SettingsView(autoAdvanceEnabled: $autoAdvanceEnabled, interval: $autoAdvanceInterval) {
+                    showingSettings = false
+                }
+                .transition(reduceMotion ? .identity : .move(edge: .top))
+            } else {
+                phrasePage
+                    .transition(reduceMotion ? .identity : .move(edge: .bottom))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
+        .background(Color.white.ignoresSafeArea())
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: showingSettings)
+        .background(ThreeFingerSwipe(
+            isEnabled: scenePhase == .active,
+            direction: showingSettings ? .up : .down
+        ) { showingSettings.toggle() })
+        .task(id: playbackSchedule) {
+            guard playbackSchedule.isRunning else { return }
+            do {
+                try await Task.sleep(nanoseconds: UInt64(playbackSchedule.interval * 1_000_000_000))
+                try Task.checkCancellation()
+                generate()
+            } catch is CancellationError {
+                // Cancel pending work when playback stops, settings change, or the scene becomes inactive.
+            } catch {
+                return
+            }
+        }
+    }
+
+    private var phrasePage: some View {
         ZStack {
             Color.white.ignoresSafeArea()
 
@@ -15,7 +54,7 @@ struct ContentView: View {
                 let horizontalPadding = max(proxy.size.width * 0.04, 24)
                 let fontSize = fittedFontSize(in: proxy.size, padding: horizontalPadding)
 
-                Button(action: generate) {
+                Button(action: generateManually) {
                     Group {
                         if let phrase {
                             HStack(spacing: 0) {
@@ -42,12 +81,47 @@ struct ContentView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("生成原始动机")
                 .accessibilityValue(phraseText)
+                .accessibilityAction(named: "打开设置") { showingSettings = true }
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            if ProcessInfo.processInfo.isiOSAppOnMac {
+                Button { showingSettings = true } label: {
+                    Image(systemName: "gearshape")
+                        .font(.title3)
+                        .foregroundStyle(.secondary)
+                        .frame(width: 44, height: 44)
+                }
+                .buttonStyle(.plain)
+                .padding(8)
+                .accessibilityLabel("打开设置")
+                .keyboardShortcut(",", modifiers: .command)
             }
         }
     }
 
     private func generate() {
         phrase = KurioPhraseGenerator.next()
+        generation += 1
+    }
+
+    private func generateManually() {
+        autoAdvanceEnabled = false
+        generate()
+    }
+
+    private struct PlaybackSchedule: Equatable {
+        let isRunning: Bool
+        let interval: Double
+        let generation: Int
+    }
+
+    private var playbackSchedule: PlaybackSchedule {
+        PlaybackSchedule(
+            isRunning: autoAdvanceEnabled && scenePhase == .active && !showingSettings && phrase != nil,
+            interval: (FlowInterval(rawValue: autoAdvanceInterval) ?? .fiveSeconds).rawValue,
+            generation: generation
+        )
     }
 
     private func animatedWord(_ word: String, movesUp: Bool) -> some View {

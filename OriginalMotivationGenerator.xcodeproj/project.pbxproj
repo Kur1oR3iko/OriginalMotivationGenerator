@@ -11,6 +11,8 @@
 		A00000000000000000000002 /* KurioPhraseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000002 /* KurioPhraseGenerator.swift */; };
 		A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */; };
 		A00000000000000000000004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005 /* Assets.xcassets */; };
+		A00000000000000000000008 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000008 /* SettingsView.swift */; };
+		A00000000000000000000009 /* ThreeFingerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000009 /* ThreeFingerSwipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		B00000000000000000000005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B00000000000000000000006 /* IconSource.svg */ = {isa = PBXFileReference; lastKnownFileType = image.svg; path = IconSource.svg; sourceTree = "<group>"; };
 		B00000000000000000000007 /* 原始动机生成器.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "原始动机生成器.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000008 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B00000000000000000000009 /* ThreeFingerSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeFingerSwipe.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +51,8 @@
 			children = (
 				B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */,
 				B00000000000000000000001 /* ContentView.swift */,
+				B00000000000000000000009 /* ThreeFingerSwipe.swift */,
+				B00000000000000000000008 /* SettingsView.swift */,
 				B00000000000000000000002 /* KurioPhraseGenerator.swift */,
 				B00000000000000000000005 /* Assets.xcassets */,
 				B00000000000000000000006 /* IconSource.svg */,
@@ -135,6 +141,8 @@
 			files = (
 				A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */,
 				A00000000000000000000001 /* ContentView.swift in Sources */,
+				A00000000000000000000009 /* ThreeFingerSwipe.swift in Sources */,
+				A00000000000000000000008 /* SettingsView.swift in Sources */,
 				A00000000000000000000002 /* KurioPhraseGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
