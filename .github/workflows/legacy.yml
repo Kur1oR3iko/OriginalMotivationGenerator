@@ -36,11 +36,8 @@ jobs:
           git -C "$RUNNER_TEMP/legacy-sdks" sparse-checkout set iPhoneOS9.3.sdk
           git -C "$RUNNER_TEMP/legacy-sdks" fetch --depth=1 origin 0222fd5413cf4b9af096f37b4621afa2688572f7
           git -C "$RUNNER_TEMP/legacy-sdks" checkout --detach FETCH_HEAD
-          compiler=$(find "$RUNNER_TEMP/legacy-toolchain" -type f -name clang -print -quit)
-          if [ -z "$compiler" ]; then
-            compiler=$(find "$RUNNER_TEMP/legacy-toolchain" -name clang -print -quit)
-          fi
-          test -n "$compiler"
+          compiler=$(find "$RUNNER_TEMP/legacy-toolchain" -path '*/bin/clang' -print -quit)
+          test -x "$compiler"
           echo "LEGACY_BIN=$(dirname "$compiler")" >> "$GITHUB_ENV"
           echo "LEGACY_SDK=$RUNNER_TEMP/legacy-sdks/iPhoneOS9.3.sdk" >> "$GITHUB_ENV"
       - name: Compile both device architectures
