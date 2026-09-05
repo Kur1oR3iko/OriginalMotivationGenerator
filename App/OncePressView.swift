@@ -1,5 +1,4 @@
 import SwiftUI
-import AVFoundation
 
 struct OncePressView: View {
     @ObservedObject var store: OncePressStore
@@ -27,7 +26,7 @@ struct OncePressView: View {
                 } else {
                     Button {
                         if store.press(timeZone: Clock25.timeZone(for: timeZoneIdentifier)) {
-                            ButtonClickSound.shared.play()
+                            AppSoundPlayer.shared.play(.click)
                             UIImpactFeedbackGenerator(style: .light).impactOccurred()
                         }
                     } label: {
@@ -65,24 +64,6 @@ private struct OnceButtonStyle: ButtonStyle {
             .offset(y: configuration.isPressed ? 3 : 0)
             .shadow(color: .black.opacity(0.18), radius: configuration.isPressed ? 1 : 3,
                     y: configuration.isPressed ? 1 : 6)
-    }
-}
-
-@MainActor
-private final class ButtonClickSound {
-    static let shared = ButtonClickSound()
-    private var player: AVAudioPlayer?
-
-    private init() {
-        guard let url = Bundle.main.url(forResource: "ButtonClick", withExtension: "wav") else { return }
-        try? AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default)
-        player = try? AVAudioPlayer(contentsOf: url)
-        player?.prepareToPlay()
-    }
-
-    func play() {
-        player?.currentTime = 0
-        player?.play()
     }
 }
 

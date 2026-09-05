@@ -14,7 +14,11 @@ set(APP_SOURCES
     "${APP_ROOT}/OncePressStore.swift"
     "${APP_ROOT}/OncePressView.swift"
     "${APP_ROOT}/LetterView.swift"
-    "${APP_ROOT}/ButtonClick.wav"
+    "${APP_ROOT}/AppSoundPlayer.swift"
+    "${APP_ROOT}/Sounds/page.mp3"
+    "${APP_ROOT}/Sounds/click.wav"
+    "${APP_ROOT}/Sounds/send.wav"
+    "${APP_ROOT}/Sounds/tick.wav"
     "${APP_ROOT}/Clock25.swift"
     "${APP_ROOT}/ClockView.swift"
     "${APP_ROOT}/ClockSettingsView.swift"
@@ -23,7 +27,13 @@ set(APP_SOURCES
     "${APP_ROOT}/KurioPhraseGenerator.swift"
 )
 
-set_source_files_properties("${APP_ROOT}/ButtonClick.wav" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+set_source_files_properties(
+    "${APP_ROOT}/Sounds/page.mp3"
+    "${APP_ROOT}/Sounds/click.wav"
+    "${APP_ROOT}/Sounds/send.wav"
+    "${APP_ROOT}/Sounds/tick.wav"
+    PROPERTIES MACOSX_PACKAGE_LOCATION Resources
+)
 add_executable(OriginalMotivationGenerator ${APP_SOURCES})
 target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit" "-framework AVFoundation")
 

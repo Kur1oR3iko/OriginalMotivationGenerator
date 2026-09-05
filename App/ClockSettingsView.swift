@@ -5,6 +5,7 @@ struct ClockSettingsView: View {
     @ScaledMetric(relativeTo: .largeTitle) private var titleSize = 56
     @ScaledMetric(relativeTo: .body) private var zoneRowHeight: CGFloat = 44
     @Binding var showsDate: Bool
+    @Binding var showsSeconds: Bool
     @Binding var timeZoneIdentifier: String
     var onEditingChanged: (Bool) -> Void = { _ in }
     @FocusState private var isSearching: Bool
@@ -60,6 +61,9 @@ struct ClockSettingsView: View {
     private var displayControls: some View {
         VStack(alignment: .leading, spacing: 20) {
             Toggle("显示年月日", isOn: $showsDate)
+                .font(.title2.bold())
+                .toggleStyle(.switch)
+            Toggle("显示秒钟", isOn: $showsSeconds)
                 .font(.title2.bold())
                 .toggleStyle(.switch)
             TimelineView(.periodic(from: .now, by: 1)) { context in

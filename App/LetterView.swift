@@ -25,6 +25,7 @@ final class LetterDraft: ObservableObject {
         recipientVisible = true
         text = ""
         isSending = true
+        AppSoundPlayer.shared.play(.send)
         dissolution = Task { @MainActor in
             do {
                 try await Task.sleep(nanoseconds: 500_000_000)

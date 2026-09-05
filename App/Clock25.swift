@@ -14,6 +14,7 @@ enum Clock25 {
         let second: Int
 
         var timeText: String { String(format: "%02d:%02d", hour, minute) }
+        var timeTextWithSeconds: String { String(format: "%02d:%02d:%02d", hour, minute, second) }
         var dateText: String { "\(year)年\(month)月\(day)日" }
     }
 

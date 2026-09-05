@@ -61,6 +61,8 @@ enum Clock25Tests {
                          Clock25.reading(at: date.addingTimeInterval(Double(offset * 3600)), timeZone: utc))
         }
         precondition(Clock25.reading(at: Clock25.epoch.addingTimeInterval(89_999), timeZone: utc).timeText == "24:59")
+        precondition(Clock25.reading(at: Clock25.epoch.addingTimeInterval(89_999), timeZone: utc).timeTextWithSeconds == "24:59:59")
+        precondition(Clock25.reading(at: Clock25.epoch.addingTimeInterval(90_000), timeZone: utc).timeTextWithSeconds == "00:00:00")
         print("PASS: epoch, 25-hour rollover, negative offsets, 12 months, leap years, month grids, weekdays, time zones and DST")
     }
 }

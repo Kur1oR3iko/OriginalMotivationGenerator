@@ -20,6 +20,7 @@ struct ContentView: View {
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceEnabled") private var autoAdvanceEnabled = false
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceInterval") private var autoAdvanceInterval = 5.0
     @AppStorage("originalMotivationGenerator.v1.clockShowsDate") private var clockShowsDate = true
+    @AppStorage("originalMotivationGenerator.v1.clockShowsSeconds") private var clockShowsSeconds = false
     @AppStorage("originalMotivationGenerator.v1.clockTimeZone") private var clockTimeZone = "system"
     @State private var phrase = KurioPhraseGenerator.lastPhrase ?? KurioPhraseGenerator.next()
     @State private var showingSettings = false
@@ -144,10 +145,10 @@ struct ContentView: View {
             case (.phrase, true):
                 SettingsView(autoAdvanceEnabled: $autoAdvanceEnabled, interval: $autoAdvanceInterval)
             case (.clock, false):
-                ClockView(showsDate: clockShowsDate, timeZoneIdentifier: clockTimeZone,
+                ClockView(showsDate: clockShowsDate, showsSeconds: clockShowsSeconds, timeZoneIdentifier: clockTimeZone,
                           isActive: selectedPage == .clock && !showingSettings && !isTurningPage && scenePhase == .active)
             case (.clock, true):
-                ClockSettingsView(showsDate: $clockShowsDate, timeZoneIdentifier: $clockTimeZone) { editing in
+                ClockSettingsView(showsDate: $clockShowsDate, showsSeconds: $clockShowsSeconds, timeZoneIdentifier: $clockTimeZone) { editing in
                     if selectedPage == .clock && showingSettings { isEditingText = editing }
                 }
             case (.once, false):
@@ -260,6 +261,7 @@ struct ContentView: View {
     private func generate() {
         phrase = KurioPhraseGenerator.next()
         generation += 1
+        if phrase != nil { AppSoundPlayer.shared.play(.page) }
     }
 
     private func generateManually() {

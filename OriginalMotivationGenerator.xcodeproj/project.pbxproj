@@ -20,7 +20,11 @@
 		A00000000000000000000014 /* OncePressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000014 /* OncePressStore.swift */; };
 		A00000000000000000000015 /* OncePressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000015 /* OncePressView.swift */; };
 		A00000000000000000000016 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000016 /* LetterView.swift */; };
-		A00000000000000000000017 /* ButtonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000017 /* ButtonClick.wav */; };
+		A00000000000000000000018 /* AppSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000018 /* AppSoundPlayer.swift */; };
+		A00000000000000000000019 /* page.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000019 /* page.mp3 */; };
+		A00000000000000000000020 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000020 /* click.wav */; };
+		A00000000000000000000021 /* send.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000021 /* send.wav */; };
+		A00000000000000000000022 /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000022 /* tick.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +44,11 @@
 		B00000000000000000000014 /* OncePressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressStore.swift; sourceTree = "<group>"; };
 		B00000000000000000000015 /* OncePressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressView.swift; sourceTree = "<group>"; };
 		B00000000000000000000016 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
-		B00000000000000000000017 /* ButtonClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ButtonClick.wav; sourceTree = "<group>"; };
+		B00000000000000000000018 /* AppSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundPlayer.swift; sourceTree = "<group>"; };
+		B00000000000000000000019 /* page.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sounds/page.mp3; sourceTree = "<group>"; };
+		B00000000000000000000020 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/click.wav; sourceTree = "<group>"; };
+		B00000000000000000000021 /* send.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/send.wav; sourceTree = "<group>"; };
+		B00000000000000000000022 /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/tick.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +75,11 @@
 			children = (
 				B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */,
 				B00000000000000000000001 /* ContentView.swift */,
-				B00000000000000000000017 /* ButtonClick.wav */,
+				B00000000000000000000022 /* tick.wav */,
+				B00000000000000000000021 /* send.wav */,
+				B00000000000000000000020 /* click.wav */,
+				B00000000000000000000019 /* page.mp3 */,
+				B00000000000000000000018 /* AppSoundPlayer.swift */,
 				B00000000000000000000016 /* LetterView.swift */,
 				B00000000000000000000015 /* OncePressView.swift */,
 				B00000000000000000000014 /* OncePressStore.swift */,
@@ -153,7 +165,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00000000000000000000004 /* Assets.xcassets in Resources */,
-				A00000000000000000000017 /* ButtonClick.wav in Resources */,
+				A00000000000000000000022 /* tick.wav in Resources */,
+				A00000000000000000000021 /* send.wav in Resources */,
+				A00000000000000000000020 /* click.wav in Resources */,
+				A00000000000000000000019 /* page.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +181,7 @@
 			files = (
 				A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */,
 				A00000000000000000000001 /* ContentView.swift in Sources */,
+				A00000000000000000000018 /* AppSoundPlayer.swift in Sources */,
 				A00000000000000000000016 /* LetterView.swift in Sources */,
 				A00000000000000000000015 /* OncePressView.swift in Sources */,
 				A00000000000000000000014 /* OncePressStore.swift in Sources */,
