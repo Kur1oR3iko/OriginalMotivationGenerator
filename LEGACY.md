@@ -1,6 +1,15 @@
 # iOS 6–14 兼容版
 
-已增加独立的 Objective-C / UIKit 工程，目标最低版本为 iOS 6.0，真机架构为 armv7 + arm64。原 SwiftUI 工程继续保留。**目前仅完成源码移植和静态检查，尚未使用 Apple SDK 编译，也未验证任一版本的实际运行。**
+已增加独立的 Objective-C / UIKit 工程，目标最低版本为 iOS 6.0，真机架构为 armv7 + arm64。原 SwiftUI 工程继续保留。**GitHub Actions 交叉编译、链接和 IPA 打包已通过，尚未验证任一版本的实际运行。本地 Xcode 工程尚未构建验证。**
+
+## 已验证产物（2026-09-05）
+
+- 成功构建：[GitHub Actions 33944258525](https://github.com/Kur1oR3iko/OriginalMotivationGenerator/actions/runs/33944258525)，源码提交 `7b3a877`。
+- Artifact：`OriginalMotivationGenerator-iOS6-14-unsigned`，内含 IPA 和二进制检查报告。
+- IPA 为 59,494 字节，SHA-256 为 `e7da8d1cf7b284ddd15bc0e5febd86ff373df5040dfe0b4c3f8fd5e41b00852f`。
+- 实际 Mach-O 切片：armv7 最低 iOS 6.0；arm64 最低 iOS 7.0；依赖系统框架及运行库，无 Swift 依赖。
+- 本地复核 ZIP 完整性、Info.plist 变量替换和词库逐字一致性通过。Python 穷举原算法 11,390,625 个排列位置，未发现重复；这不替代设备上的生成器运行测试。
+- 构建仍有旧目标弃用和 `.tbd ... built for iOS Simulator` 链接警告。产物已检查为 ARM 真机架构及 iOS 最低版本记录，但警告不能作为运行兼容性已验证的依据，必须补做设备安装和启动测试。
 
 ## 已实现
 

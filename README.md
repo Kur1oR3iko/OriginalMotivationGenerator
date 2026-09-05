@@ -1,6 +1,6 @@
 # 原始动机生成器
 
-需要 iOS 6–14 兼容版时，打开 `OriginalMotivationGeneratorLegacy.xcodeproj`，具体工具链和验证限制见 [LEGACY.md](LEGACY.md)。旧版源码已移植，尚未完成 Apple SDK 构建和真机验证。
+需要 iOS 6–14 兼容版时，打开 `OriginalMotivationGeneratorLegacy.xcodeproj`，具体工具链和验证限制见 [LEGACY.md](LEGACY.md)。GitHub Actions 已成功生成 armv7 + arm64 未签名 IPA，尚未完成真机验证。
 
 从 `emu98` 关于页彩蛋中独立出来的 iOS / iPadOS SwiftUI App。它保留原始的 225 个动词、225 个形容词和 225 个名词，以及遍历全部 11,390,625 种组合且不重复的生成算法。
 
