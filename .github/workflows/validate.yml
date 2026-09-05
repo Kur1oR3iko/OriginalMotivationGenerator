@@ -14,6 +14,16 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Check 25-hour clock calendar
+        run: |
+          swiftc App/Clock25.swift Tests/Clock25Tests.swift -o "$RUNNER_TEMP/omg-clock-tests"
+          "$RUNNER_TEMP/omg-clock-tests"
+
+      - name: Check one-time press persistence
+        run: |
+          swiftc App/OncePressStore.swift Tests/OncePressStoreTests.swift -o "$RUNNER_TEMP/omg-once-tests"
+          "$RUNNER_TEMP/omg-once-tests"
+
       - name: Build for iOS Simulator
         run: >-
           xcodebuild

@@ -29,7 +29,6 @@ struct SettingsView: View {
     @ScaledMetric(relativeTo: .largeTitle) private var titleSize = 56
     @Binding var autoAdvanceEnabled: Bool
     @Binding var interval: Double
-    let onBack: () -> Void
 
     var body: some View {
         GeometryReader { proxy in
@@ -37,20 +36,6 @@ struct SettingsView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: wideLayout ? 48 : 32) {
-                    HStack {
-                        Button(action: onBack) {
-                            Label("返回短语", systemImage: "arrow.up")
-                                .font(.subheadline.weight(.medium))
-                                .frame(minHeight: 44)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        Spacer()
-                        Text("设置")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-
                     Text("kurio最新力作（2）")
                         .font(.system(size: wideLayout ? titleSize : titleSize * 0.75,
                                       weight: .black, design: .rounded))
@@ -69,23 +54,16 @@ struct SettingsView: View {
                         playbackControls
                     }
 
-                    Text(ProcessInfo.processInfo.isiOSAppOnMac
-                         ? "点击右上角设置按钮，或按 ⌘,，再次打开这里。"
-                         : "三指下划进入设置，三指上划回到词语。")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: 1040, alignment: .leading)
                 .padding(.horizontal, wideLayout ? 48 : 28)
-                .padding(.top, 12)
+                .padding(.top, 36)
                 .padding(.bottom, 40)
                 .frame(maxWidth: .infinity)
             }
         }
         .foregroundStyle(.black)
         .background(Color.white.ignoresSafeArea())
-        .accessibilityAction(named: "返回短语", onBack)
     }
 
     private var introduction: some View {

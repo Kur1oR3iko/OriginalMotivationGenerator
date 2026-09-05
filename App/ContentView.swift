@@ -1,37 +1,109 @@
 import SwiftUI
 import UIKit
+import Combine
 
+enum AppTypography {
+    static func displayFont(size: CGFloat) -> Font {
+        .system(size: size, weight: .black, design: .rounded)
+    }
+
+    static func clockFont(size: CGFloat) -> Font {
+        .system(size: size, weight: .heavy, design: .default)
+    }
+}
+
+@MainActor
 struct ContentView: View {
+    let keyboardEvents: PassthroughSubject<UISwipeGestureRecognizer.Direction, Never>
+    let scenePhase: ScenePhase
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceEnabled") private var autoAdvanceEnabled = false
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceInterval") private var autoAdvanceInterval = 5.0
+    @AppStorage("originalMotivationGenerator.v1.clockShowsDate") private var clockShowsDate = true
+    @AppStorage("originalMotivationGenerator.v1.clockTimeZone") private var clockTimeZone = "system"
     @State private var phrase = KurioPhraseGenerator.lastPhrase ?? KurioPhraseGenerator.next()
     @State private var showingSettings = false
+    @State private var selectedPage: ArtPage = .phrase
+    @State private var horizontalStep = 1
+    @State private var showsPageIndicator = false
+    @State private var indicatorPulse = 0
+    @StateObject private var onceStore = OncePressStore.shared
+    @StateObject private var letterDraft = LetterDraft()
+    @State private var turnAxis: Axis = .vertical
+    @State private var pageTravel: CGFloat = 0
+    @State private var isTurningPage = false
+    @State private var isEditingText = false
     @State private var generation = 0
 
     private var phraseText: String { phrase?.text ?? "全部组合已生成完毕" }
 
     var body: some View {
-        ZStack {
-            if showingSettings {
-                SettingsView(autoAdvanceEnabled: $autoAdvanceEnabled, interval: $autoAdvanceInterval) {
-                    showingSettings = false
-                }
-                .transition(reduceMotion ? .identity : .move(edge: .top))
-            } else {
-                phrasePage
-                    .transition(reduceMotion ? .identity : .move(edge: .bottom))
+        GeometryReader { proxy in
+            let horizontal = turnAxis == .horizontal
+            let neighborSettings = horizontal ? showingSettings : !showingSettings
+            let previousPage = horizontal ? selectedPage.offset(by: -1) : selectedPage
+            let nextPage = horizontal ? selectedPage.offset(by: 1) : selectedPage
+            // Horizontal neighbors wrap across all artworks; vertical neighbors open the matching settings.
+            ZStack {
+                page(settings: neighborSettings, feature: previousPage)
+                    .offset(x: horizontal ? -proxy.size.width : 0,
+                            y: horizontal ? 0 : -proxy.size.height)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+                page(settings: showingSettings, feature: selectedPage)
+                page(settings: neighborSettings, feature: nextPage)
+                    .offset(x: horizontal ? proxy.size.width : 0,
+                            y: horizontal ? 0 : proxy.size.height)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
+            .offset(x: horizontal ? pageTravel * proxy.size.width : 0,
+                    y: horizontal ? 0 : pageTravel * proxy.size.height)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .background(Color.white.ignoresSafeArea())
-        .animation(reduceMotion ? nil : .easeOut(duration: 0.24), value: showingSettings)
-        .background(ThreeFingerSwipe(
-            isEnabled: scenePhase == .active,
-            direction: showingSettings ? .up : .down
-        ) { showingSettings.toggle() })
+        .allowsHitTesting(!isTurningPage)
+        .background(ThreeFingerSwipe(isEnabled: scenePhase == .active && !isTurningPage, action: turnPage))
+        .onReceive(keyboardEvents) { direction in
+            guard scenePhase == .active && !isEditingText else { return }
+            turnPage(direction)
+        }
+        .overlay(alignment: .bottom) { pageIndicator }
+        .task(id: indicatorPulse) {
+            guard indicatorPulse > 0 else { return }
+            do {
+                try await Task.sleep(nanoseconds: 1_800_000_000)
+                try Task.checkCancellation()
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) { showsPageIndicator = false }
+            } catch {
+                return
+            }
+        }
+        .accessibilityAction(named: "下一页") { turnPage(.up) }
+        .accessibilityAction(named: "上一页") { turnPage(.down) }
+        .accessibilityAction(named: "下一个功能") { turnPage(.left) }
+        .accessibilityAction(named: "上一个功能") { turnPage(.right) }
+        .task(id: isTurningPage) {
+            guard isTurningPage else { return }
+            do {
+                try await Task.sleep(nanoseconds: 240_000_000)
+                try Task.checkCancellation()
+                var transaction = Transaction(animation: nil)
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    if turnAxis == .horizontal {
+                        selectedPage = selectedPage.offset(by: horizontalStep)
+                    } else {
+                        showingSettings.toggle()
+                    }
+                    pageTravel = 0
+                    isTurningPage = false
+                }
+            } catch {
+                return
+            }
+        }
         .task(id: playbackSchedule) {
             guard playbackSchedule.isRunning else { return }
             do {
@@ -43,6 +115,105 @@ struct ContentView: View {
             } catch {
                 return
             }
+        }
+    }
+
+    private var pageIndicator: some View {
+        let current = isTurningPage && turnAxis == .horizontal ? selectedPage.offset(by: horizontalStep) : selectedPage
+        return HStack(spacing: 9) {
+            ForEach(ArtPage.allCases) { page in
+                Circle()
+                    .fill(page == current ? Color.black : Color(white: 0.75))
+                    .frame(width: 7, height: 7)
+            }
+        }
+        .padding(.bottom, 12)
+        .opacity(showsPageIndicator ? 1 : 0)
+        .allowsHitTesting(false)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("第\(current.rawValue + 1)页，共\(ArtPage.allCases.count)页，\(current.title)")
+        .accessibilityHidden(!showsPageIndicator)
+    }
+
+    @ViewBuilder
+    private func page(settings: Bool, feature: ArtPage) -> some View {
+        Group {
+            switch (feature, settings) {
+            case (.phrase, false):
+                phrasePage
+            case (.phrase, true):
+                SettingsView(autoAdvanceEnabled: $autoAdvanceEnabled, interval: $autoAdvanceInterval)
+            case (.clock, false):
+                ClockView(showsDate: clockShowsDate, timeZoneIdentifier: clockTimeZone,
+                          isActive: selectedPage == .clock && !showingSettings && !isTurningPage && scenePhase == .active)
+            case (.clock, true):
+                ClockSettingsView(showsDate: $clockShowsDate, timeZoneIdentifier: $clockTimeZone) { editing in
+                    if selectedPage == .clock && showingSettings { isEditingText = editing }
+                }
+            case (.once, false):
+                OncePressView(store: onceStore, timeZoneIdentifier: clockTimeZone)
+            case (.once, true):
+                ArtIntroductionView(title: "只能按一次", introduction: "要按下试试吗，你只有一次机会。", footnote: "也许你已经按过了")
+            case (.letter, false):
+                LetterView(draft: letterDraft) { editing in
+                    if selectedPage == .letter && !showingSettings { isEditingText = editing }
+                }
+            case (.letter, true):
+                ArtIntroductionView(title: "信", introduction: "你知道的，很遗憾，这封信并没能发出去")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
+        .overlay(alignment: .topTrailing) {
+            if ProcessInfo.processInfo.isiOSAppOnMac && (settings || feature == .phrase || feature == .clock) {
+                HStack(spacing: 0) {
+                    Button { turnPage(.left) } label: {
+                        Image(systemName: feature.offset(by: 1).symbol)
+                            .frame(width: 44, height: 44)
+                    }
+                    .accessibilityLabel("切换到\(feature.offset(by: 1).title)")
+                    .keyboardShortcut(.rightArrow, modifiers: .command)
+
+                    Button { turnPage(.up) } label: {
+                        Image(systemName: settings ? "house" : "gearshape")
+                            .frame(width: 44, height: 44)
+                    }
+                    .accessibilityLabel(settings ? "切换到主页" : "打开设置")
+                    .keyboardShortcut(",", modifiers: .command)
+                }
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .buttonStyle(.plain)
+                .padding(8)
+                .disabled(settings != showingSettings || feature != selectedPage || isTurningPage)
+            }
+        }
+    }
+
+    private func turnPage(_ direction: UISwipeGestureRecognizer.Direction) {
+        guard !isTurningPage else { return }
+        if isEditingText {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            isEditingText = false
+        }
+        let horizontal = direction == .left || direction == .right
+        if horizontal {
+            horizontalStep = direction == .left ? 1 : -1
+            indicatorPulse += 1
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.12)) { showsPageIndicator = true }
+        }
+        guard !reduceMotion else {
+            if horizontal {
+                selectedPage = selectedPage.offset(by: horizontalStep)
+            } else {
+                showingSettings.toggle()
+            }
+            return
+        }
+        turnAxis = horizontal ? .horizontal : .vertical
+        isTurningPage = true
+        withAnimation(.easeOut(duration: 0.24)) {
+            pageTravel = direction == .up || direction == .left ? -1 : 1
         }
     }
 
@@ -67,7 +238,7 @@ struct ContentView: View {
                             Text(phraseText)
                         }
                     }
-                        .font(.system(size: fontSize, weight: .black, design: .rounded))
+                        .font(AppTypography.displayFont(size: fontSize))
                         .foregroundStyle(.black)
                         .multilineTextAlignment(.center)
                         .lineLimit(1)
@@ -81,21 +252,7 @@ struct ContentView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel("生成原始动机")
                 .accessibilityValue(phraseText)
-                .accessibilityAction(named: "打开设置") { showingSettings = true }
-            }
-        }
-        .overlay(alignment: .topTrailing) {
-            if ProcessInfo.processInfo.isiOSAppOnMac {
-                Button { showingSettings = true } label: {
-                    Image(systemName: "gearshape")
-                        .font(.title3)
-                        .foregroundStyle(.secondary)
-                        .frame(width: 44, height: 44)
-                }
-                .buttonStyle(.plain)
-                .padding(8)
-                .accessibilityLabel("打开设置")
-                .keyboardShortcut(",", modifiers: .command)
+                .accessibilityAction(named: "打开设置") { turnPage(.up) }
             }
         }
     }
@@ -118,7 +275,7 @@ struct ContentView: View {
 
     private var playbackSchedule: PlaybackSchedule {
         PlaybackSchedule(
-            isRunning: autoAdvanceEnabled && scenePhase == .active && !showingSettings && phrase != nil,
+            isRunning: autoAdvanceEnabled && scenePhase == .active && !showingSettings && selectedPage == .phrase && !isTurningPage && phrase != nil,
             interval: (FlowInterval(rawValue: autoAdvanceInterval) ?? .fiveSeconds).rawValue,
             generation: generation
         )

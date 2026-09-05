@@ -10,13 +10,22 @@ set(APP_ROOT "${CMAKE_SOURCE_DIR}/App")
 set(APP_SOURCES
     "${APP_ROOT}/OriginalMotivationGeneratorApp.swift"
     "${APP_ROOT}/ContentView.swift"
+    "${APP_ROOT}/ArtPage.swift"
+    "${APP_ROOT}/OncePressStore.swift"
+    "${APP_ROOT}/OncePressView.swift"
+    "${APP_ROOT}/LetterView.swift"
+    "${APP_ROOT}/ButtonClick.wav"
+    "${APP_ROOT}/Clock25.swift"
+    "${APP_ROOT}/ClockView.swift"
+    "${APP_ROOT}/ClockSettingsView.swift"
     "${APP_ROOT}/SettingsView.swift"
     "${APP_ROOT}/ThreeFingerSwipe.swift"
     "${APP_ROOT}/KurioPhraseGenerator.swift"
 )
 
+set_source_files_properties("${APP_ROOT}/ButtonClick.wav" PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 add_executable(OriginalMotivationGenerator ${APP_SOURCES})
-target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit")
+target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit" "-framework AVFoundation")
 
 set_target_properties(OriginalMotivationGenerator PROPERTIES
     MACOSX_BUNDLE TRUE

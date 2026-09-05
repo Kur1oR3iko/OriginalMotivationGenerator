@@ -13,6 +13,14 @@
 		A00000000000000000000004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000005 /* Assets.xcassets */; };
 		A00000000000000000000008 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000008 /* SettingsView.swift */; };
 		A00000000000000000000009 /* ThreeFingerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000009 /* ThreeFingerSwipe.swift */; };
+		A00000000000000000000010 /* Clock25.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000010 /* Clock25.swift */; };
+		A00000000000000000000011 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000011 /* ClockView.swift */; };
+		A00000000000000000000012 /* ClockSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000012 /* ClockSettingsView.swift */; };
+		A00000000000000000000013 /* ArtPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000013 /* ArtPage.swift */; };
+		A00000000000000000000014 /* OncePressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000014 /* OncePressStore.swift */; };
+		A00000000000000000000015 /* OncePressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000015 /* OncePressView.swift */; };
+		A00000000000000000000016 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000016 /* LetterView.swift */; };
+		A00000000000000000000017 /* ButtonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000017 /* ButtonClick.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +33,14 @@
 		B00000000000000000000007 /* 原始动机生成器.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "原始动机生成器.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B00000000000000000000008 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B00000000000000000000009 /* ThreeFingerSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeFingerSwipe.swift; sourceTree = "<group>"; };
+		B00000000000000000000010 /* Clock25.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock25.swift; sourceTree = "<group>"; };
+		B00000000000000000000011 /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		B00000000000000000000012 /* ClockSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockSettingsView.swift; sourceTree = "<group>"; };
+		B00000000000000000000013 /* ArtPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtPage.swift; sourceTree = "<group>"; };
+		B00000000000000000000014 /* OncePressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressStore.swift; sourceTree = "<group>"; };
+		B00000000000000000000015 /* OncePressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressView.swift; sourceTree = "<group>"; };
+		B00000000000000000000016 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
+		B00000000000000000000017 /* ButtonClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ButtonClick.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +67,14 @@
 			children = (
 				B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */,
 				B00000000000000000000001 /* ContentView.swift */,
+				B00000000000000000000017 /* ButtonClick.wav */,
+				B00000000000000000000016 /* LetterView.swift */,
+				B00000000000000000000015 /* OncePressView.swift */,
+				B00000000000000000000014 /* OncePressStore.swift */,
+				B00000000000000000000013 /* ArtPage.swift */,
+				B00000000000000000000012 /* ClockSettingsView.swift */,
+				B00000000000000000000011 /* ClockView.swift */,
+				B00000000000000000000010 /* Clock25.swift */,
 				B00000000000000000000009 /* ThreeFingerSwipe.swift */,
 				B00000000000000000000008 /* SettingsView.swift */,
 				B00000000000000000000002 /* KurioPhraseGenerator.swift */,
@@ -129,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A00000000000000000000004 /* Assets.xcassets in Resources */,
+				A00000000000000000000017 /* ButtonClick.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +166,13 @@
 			files = (
 				A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */,
 				A00000000000000000000001 /* ContentView.swift in Sources */,
+				A00000000000000000000016 /* LetterView.swift in Sources */,
+				A00000000000000000000015 /* OncePressView.swift in Sources */,
+				A00000000000000000000014 /* OncePressStore.swift in Sources */,
+				A00000000000000000000013 /* ArtPage.swift in Sources */,
+				A00000000000000000000012 /* ClockSettingsView.swift in Sources */,
+				A00000000000000000000011 /* ClockView.swift in Sources */,
+				A00000000000000000000010 /* Clock25.swift in Sources */,
 				A00000000000000000000009 /* ThreeFingerSwipe.swift in Sources */,
 				A00000000000000000000008 /* SettingsView.swift in Sources */,
 				A00000000000000000000002 /* KurioPhraseGenerator.swift in Sources */,
