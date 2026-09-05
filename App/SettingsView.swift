@@ -2,6 +2,7 @@ import SwiftUI
 
 enum FlowInterval: Double, CaseIterable, Identifiable {
     case halfSecond = 0.5
+    case oneSecond = 1
     case fiveSeconds = 5
     case tenSeconds = 10
     case thirtySeconds = 30
@@ -13,6 +14,7 @@ enum FlowInterval: Double, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .halfSecond: return "0.5秒"
+        case .oneSecond: return "1秒"
         case .fiveSeconds: return "5秒"
         case .tenSeconds: return "10秒"
         case .thirtySeconds: return "30秒"

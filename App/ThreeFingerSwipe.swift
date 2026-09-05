@@ -21,7 +21,7 @@ struct ThreeFingerSwipe: UIViewRepresentable {
         view.detach()
     }
 
-    final class SwipeView: UIView {
+    final class SwipeView: UIView, UIGestureRecognizerDelegate {
         var action: (() -> Void)?
         private weak var observedWindow: UIWindow?
         lazy var swipe: UISwipeGestureRecognizer = {
@@ -29,6 +29,7 @@ struct ThreeFingerSwipe: UIViewRepresentable {
             recognizer.direction = .down
             recognizer.numberOfTouchesRequired = 3
             recognizer.cancelsTouchesInView = true
+            recognizer.delegate = self
             return recognizer
         }()
 
@@ -50,6 +51,17 @@ struct ThreeFingerSwipe: UIViewRepresentable {
         func detach() {
             observedWindow?.removeGestureRecognizer(swipe)
             observedWindow = nil
+        }
+
+        func gestureRecognizer(
+            _ gestureRecognizer: UIGestureRecognizer,
+            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+        ) -> Bool {
+            // The settings ScrollView starts panning before a discrete swipe finishes.
+            // Let the three-finger swipe complete even when that scroll pan has already begun.
+            guard gestureRecognizer === swipe,
+                  let scrollView = otherGestureRecognizer.view as? UIScrollView else { return false }
+            return otherGestureRecognizer === scrollView.panGestureRecognizer
         }
 
         @objc private func didSwipe() {
