@@ -1,6 +1,14 @@
 import Foundation
 
 enum KurioPhraseGenerator {
+    struct Phrase: Equatable {
+        let verb: String
+        let adjective: String
+        let noun: String
+
+        var text: String { verb + adjective + "的" + noun }
+    }
+
     private static let poolSize = 225
     static let totalCombinations = poolSize * poolSize * poolSize
     private static let multiplier = 104_729 // Coprime with 225³, so this visits every combination exactly once.
@@ -13,8 +21,15 @@ enum KurioPhraseGenerator {
         UserDefaults.standard.integer(forKey: cursorKey)
     }
 
-    static var lastPhrase: String? {
-        UserDefaults.standard.string(forKey: lastPhraseKey)
+    static var lastPhrase: Phrase? {
+        // Keep restoring the string saved by earlier versions without advancing the cursor.
+        guard let text = UserDefaults.standard.string(forKey: lastPhraseKey),
+              let verb = verbs.first(where: { text.hasPrefix($0) }) else { return nil }
+        let remainder = text.dropFirst(verb.count).split(separator: "的", maxSplits: 1)
+        guard remainder.count == 2,
+              adjectives.contains(String(remainder[0])),
+              nouns.contains(String(remainder[1])) else { return nil }
+        return Phrase(verb: verb, adjective: String(remainder[0]), noun: String(remainder[1]))
     }
 
     static func reset() {
@@ -24,7 +39,7 @@ enum KurioPhraseGenerator {
         defaults.removeObject(forKey: lastPhraseKey)
     }
 
-    static func next() -> String? {
+    static func next() -> Phrase? {
         assert(verbs.count == poolSize)
         assert(adjectives.count == poolSize)
         assert(nouns.count == poolSize)
@@ -47,8 +62,8 @@ enum KurioPhraseGenerator {
         let nounIndex = (combination / poolSize / poolSize) % poolSize
         defaults.set(cursor + 1, forKey: cursorKey)
 
-        let phrase = verbs[verbIndex] + adjectives[adjectiveIndex] + "的" + nouns[nounIndex]
-        defaults.set(phrase, forKey: lastPhraseKey)
+        let phrase = Phrase(verb: verbs[verbIndex], adjective: adjectives[adjectiveIndex], noun: nouns[nounIndex])
+        defaults.set(phrase.text, forKey: lastPhraseKey)
         return phrase
     }
 

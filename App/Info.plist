@@ -38,5 +38,7 @@
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+    <key>UISupportsTrueScreenSizeOnMac</key>
+    <true/>
 </dict>
 </plist>
