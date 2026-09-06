@@ -8,7 +8,7 @@ struct ClockView: View {
 
     var body: some View {
         Group {
-            if isActive {
+            if isActive && showsSeconds {
                 TimelineView(.periodic(from: .now, by: 1)) { context in
                     face(at: context.date)
                         .onChange(of: Int(context.date.timeIntervalSince1970)) { _ in
@@ -22,6 +22,9 @@ struct ClockView: View {
         .background(Color.white.ignoresSafeArea())
         .onChange(of: isActive) { active in
             if !active { AppSoundPlayer.shared.stop(.tick) }
+        }
+        .onChange(of: showsSeconds) { seconds in
+            if !seconds { AppSoundPlayer.shared.stop(.tick) }
         }
         .onDisappear { AppSoundPlayer.shared.stop(.tick) }
     }

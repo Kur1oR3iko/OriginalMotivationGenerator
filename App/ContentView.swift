@@ -20,7 +20,7 @@ struct ContentView: View {
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceEnabled") private var autoAdvanceEnabled = false
     @AppStorage("originalMotivationGenerator.v1.autoAdvanceInterval") private var autoAdvanceInterval = 5.0
     @AppStorage("originalMotivationGenerator.v1.clockShowsDate") private var clockShowsDate = true
-    @AppStorage("originalMotivationGenerator.v1.clockShowsSeconds") private var clockShowsSeconds = false
+    @AppStorage("originalMotivationGenerator.v1.clockShowsSeconds") private var clockShowsSeconds = true
     @AppStorage("originalMotivationGenerator.v1.clockTimeZone") private var clockTimeZone = "system"
     @State private var phrase = KurioPhraseGenerator.lastPhrase ?? KurioPhraseGenerator.next()
     @State private var showingSettings = false

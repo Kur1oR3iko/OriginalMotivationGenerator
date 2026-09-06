@@ -100,9 +100,7 @@ struct LetterView: View {
                 }
                 .padding(.top, compact ? 8 : 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                HStack {
-                    Spacer()
+                .overlay(alignment: .bottomTrailing) {
                     Button {
                         let lines = editor.snapshot()
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -115,12 +113,14 @@ struct LetterView: View {
                             .foregroundStyle(.white)
                             .frame(width: 48, height: 48)
                             .background(Circle().fill(draft.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? Color(white: 0.8) : .black))
+                            .contentShape(Circle())
                     }
                     .buttonStyle(.plain)
                     .disabled(draft.isSending || draft.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityLabel("发送")
+                    .padding(.bottom, compact ? 8 : 16)
+                    .padding(.trailing, compact ? 8 : 12)
                 }
-                .padding(.top, compact ? 8 : 16)
             }
             .frame(maxWidth: 820)
             .padding(.horizontal, compact ? 24 : 36)
