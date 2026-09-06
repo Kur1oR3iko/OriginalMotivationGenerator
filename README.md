@@ -31,7 +31,7 @@ macOS 版、模拟器或连接外接键盘的 iPad 都可以直接使用方向�
 open OriginalMotivationGenerator.xcodeproj
 ```
 
-仓库同时保留了 CMake 构建文件。GitHub Actions 会在 `main` 和 `release/testflight` 分支上执行无签名模拟器构建，并在同一分支上归档后上传 TestFlight。密钥与证书配置见 [GitHub → TestFlight](docs/TESTFLIGHT.md)。Xcode Cloud 的 `ci_scripts` 仍可选用。
+仓库同时保留了 CMake 构建文件。GitHub Actions 会在 `main` 和 `release/testflight` 分支上执行无签名模拟器构建；Xcode Cloud 负责归档并发布到 TestFlight。
 
 在 Xcode 中选择模拟器即可运行。若要安装到真机，请在项目签名设置中选择自己的开发团队，或生成项目时传入：
 

@@ -1,4 +1,0 @@
-app_identifier("com.kurio.original-motivation-generator")
-apple_id(ENV["APPLE_ID"])
-team_id(ENV["APPLE_TEAM_ID"] || "89M33WN9W7")
-itc_team_id(ENV["APP_STORE_CONNECT_TEAM_ID"])
