@@ -5,3 +5,11 @@ DerivedData/
 xcuserdata/
 *.ipa
 *.xcarchive
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+*.mobileprovision
+*.p12
+*.p8
