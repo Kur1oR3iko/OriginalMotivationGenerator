@@ -29,8 +29,12 @@ struct ContentView: View {
     @State private var showsPageIndicator = false
     @State private var indicatorPulse = 0
     @StateObject private var onceStore = OncePressStore.shared
-    @StateObject private var letterDraft = LetterDraft()
+    @StateObject private var application = ApplicationStore()
     @StateObject private var deathClock = DeathClockStore()
+    @StateObject private var breath = BreathStore()
+    @StateObject private var dormancy = DormancyStore.shared
+    @StateObject private var unrecordedCamera = UnrecordedCamera()
+    @State private var sceneID = UUID()
     @AppStorage("originalMotivationGenerator.v1.deathClockSouthernHemisphere") private var deathClockSouthernHemisphere = false
     @State private var turnAxis: Axis = .vertical
     @State private var pageTravel: CGFloat = 0
@@ -69,6 +73,13 @@ struct ContentView: View {
         .background(Color.white.ignoresSafeArea())
         .allowsHitTesting(!isTurningPage)
         .background(ThreeFingerSwipe(isEnabled: scenePhase == .active && !isTurningPage, action: turnPage))
+        .onAppear { updateDormancy() }
+        .onChange(of: dormancyVisible) { _ in updateDormancy() }
+        .onDisappear { dormancy.setVisible(false, scene: sceneID); unrecordedCamera.deactivate() }
+        .task(id: cameraActive) {
+            if cameraActive { await unrecordedCamera.activate() }
+            else { unrecordedCamera.deactivate() }
+        }
         .onReceive(keyboardEvents) { direction in
             guard scenePhase == .active && !isEditingText else { return }
             turnPage(direction)
@@ -158,12 +169,16 @@ struct ContentView: View {
                 OncePressView(store: onceStore, timeZoneIdentifier: clockTimeZone)
             case (.once, true):
                 ArtIntroductionView(title: "只能按一次", introduction: "要按下试试吗，你只有一次机会。", footnote: "也许你已经按过了")
-            case (.letter, false):
-                LetterView(draft: letterDraft) { editing in
-                    if selectedPage == .letter && !showingSettings { isEditingText = editing }
+            case (.application, false):
+                ApplicationView(store: application,
+                                isActive: selectedPage == .application && !showingSettings && !isTurningPage && scenePhase == .active) { editing in
+                    if selectedPage == .application && !showingSettings { isEditingText = editing }
                 }
-            case (.letter, true):
-                ArtIntroductionView(title: "信", introduction: "你知道的，很遗憾，这封信并没能发出去")
+            case (.application, true):
+                ApplicationSettingsView {
+                    application.startAgain()
+                    turnPage(.up)
+                }
             case (.death, false):
                 DeathClockView(store: deathClock, southernHemisphere: deathClockSouthernHemisphere,
                                isActive: selectedPage == .death && !showingSettings && !isTurningPage && scenePhase == .active) { editing in
@@ -174,6 +189,18 @@ struct ContentView: View {
                     deathClock.startAgain()
                     turnPage(.up)
                 }
+            case (.breath, false):
+                BreathArtView(store: breath, isActive: selectedPage == .breath && !showingSettings && !isTurningPage && scenePhase == .active)
+            case (.breath, true):
+                BreathSettingsView(store: breath)
+            case (.notTaken, false):
+                UnrecordedCameraView(camera: unrecordedCamera, isActive: cameraActive)
+            case (.notTaken, true):
+                ArtIntroductionView(title: "没有拍下", introduction: "你决定记录下这一刻")
+            case (.dormancy, false):
+                DormancyArtView(store: dormancy, sceneID: sceneID, isActive: dormancyVisible)
+            case (.dormancy, true):
+                DormancySettingsView()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -202,6 +229,18 @@ struct ContentView: View {
                 .disabled(settings != showingSettings || feature != selectedPage || isTurningPage)
             }
         }
+    }
+
+    private var cameraActive: Bool {
+        selectedPage == .notTaken && !showingSettings && !isTurningPage && scenePhase == .active
+    }
+
+    private var dormancyVisible: Bool {
+        selectedPage == .dormancy && !showingSettings && !isTurningPage && scenePhase == .active
+    }
+
+    private func updateDormancy() {
+        dormancy.setVisible(dormancyVisible, scene: sceneID)
     }
 
     private func settingsForDestination(_ destination: ArtPage) -> Bool {

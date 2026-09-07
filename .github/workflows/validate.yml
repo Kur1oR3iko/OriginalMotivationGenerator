@@ -29,6 +29,11 @@ jobs:
           swiftc App/DeathClock.swift Tests/DeathClockTests.swift -o "$RUNNER_TEMP/omg-death-tests"
           "$RUNNER_TEMP/omg-death-tests"
 
+      - name: Check breathing, dormancy and application behavior
+        run: |
+          swiftc App/InteractiveArtModels.swift Tests/InteractiveArtTests.swift -o "$RUNNER_TEMP/omg-interactive-art-tests"
+          "$RUNNER_TEMP/omg-interactive-art-tests"
+
       - name: Build for iOS Simulator
         run: >-
           xcodebuild

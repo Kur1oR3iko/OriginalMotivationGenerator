@@ -19,7 +19,7 @@
 		A00000000000000000000013 /* ArtPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000013 /* ArtPage.swift */; };
 		A00000000000000000000014 /* OncePressStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000014 /* OncePressStore.swift */; };
 		A00000000000000000000015 /* OncePressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000015 /* OncePressView.swift */; };
-		A00000000000000000000016 /* LetterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000016 /* LetterView.swift */; };
+		A00000000000000000000016 /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000016 /* ApplicationView.swift */; };
 		A00000000000000000000018 /* AppSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000018 /* AppSoundPlayer.swift */; };
 		A00000000000000000000019 /* page.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000019 /* page.mp3 */; };
 		A00000000000000000000020 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000020 /* click.wav */; };
@@ -27,6 +27,11 @@
 		A00000000000000000000022 /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000022 /* tick.wav */; };
         A00000000000000000000023 /* DeathClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000023; };
         A00000000000000000000024 /* DeathClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000024; };
+        A00000000000000000000025 = {isa = PBXBuildFile; fileRef = B00000000000000000000025; };
+        A00000000000000000000026 = {isa = PBXBuildFile; fileRef = B00000000000000000000026; };
+        A00000000000000000000027 = {isa = PBXBuildFile; fileRef = B00000000000000000000027; };
+        A00000000000000000000028 = {isa = PBXBuildFile; fileRef = B00000000000000000000028; };
+        A00000000000000000000029 /* DormancyViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000029; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +50,7 @@
 		B00000000000000000000013 /* ArtPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtPage.swift; sourceTree = "<group>"; };
 		B00000000000000000000014 /* OncePressStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressStore.swift; sourceTree = "<group>"; };
 		B00000000000000000000015 /* OncePressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OncePressView.swift; sourceTree = "<group>"; };
-		B00000000000000000000016 /* LetterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterView.swift; sourceTree = "<group>"; };
+		B00000000000000000000016 /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
 		B00000000000000000000018 /* AppSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundPlayer.swift; sourceTree = "<group>"; };
 		B00000000000000000000019 /* page.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sounds/page.mp3; sourceTree = "<group>"; };
 		B00000000000000000000020 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/click.wav; sourceTree = "<group>"; };
@@ -53,6 +58,11 @@
 		B00000000000000000000022 /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/tick.wav; sourceTree = "<group>"; };
         B00000000000000000000023 /* DeathClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathClock.swift; sourceTree = "<group>"; };
         B00000000000000000000024 /* DeathClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathClockView.swift; sourceTree = "<group>"; };
+        B00000000000000000000025 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveArtModels.swift; sourceTree = "<group>"; };
+        B00000000000000000000026 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleTouchSurface.swift; sourceTree = "<group>"; };
+        B00000000000000000000027 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyArtViews.swift; sourceTree = "<group>"; };
+        B00000000000000000000028 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnrecordedCamera.swift; sourceTree = "<group>"; };
+        B00000000000000000000029 /* DormancyViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormancyViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +89,11 @@
 			children = (
 				B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */,
 				B00000000000000000000001 /* ContentView.swift */,
+                B00000000000000000000025,
+                B00000000000000000000026,
+                B00000000000000000000027,
+                B00000000000000000000028,
+                B00000000000000000000029 /* DormancyViews.swift */,
                 B00000000000000000000023 /* DeathClock.swift */,
                 B00000000000000000000024 /* DeathClockView.swift */,
 				B00000000000000000000022 /* tick.wav */,
@@ -86,7 +101,7 @@
 				B00000000000000000000020 /* click.wav */,
 				B00000000000000000000019 /* page.mp3 */,
 				B00000000000000000000018 /* AppSoundPlayer.swift */,
-				B00000000000000000000016 /* LetterView.swift */,
+				B00000000000000000000016 /* ApplicationView.swift */,
 				B00000000000000000000015 /* OncePressView.swift */,
 				B00000000000000000000014 /* OncePressStore.swift */,
 				B00000000000000000000013 /* ArtPage.swift */,
@@ -187,10 +202,15 @@
 			files = (
 				A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */,
 				A00000000000000000000001 /* ContentView.swift in Sources */,
+                A00000000000000000000025,
+                A00000000000000000000026,
+                A00000000000000000000027,
+                A00000000000000000000028,
+                A00000000000000000000029 /* DormancyViews.swift in Sources */,
                 A00000000000000000000023 /* DeathClock.swift in Sources */,
                 A00000000000000000000024 /* DeathClockView.swift in Sources */,
 				A00000000000000000000018 /* AppSoundPlayer.swift in Sources */,
-				A00000000000000000000016 /* LetterView.swift in Sources */,
+				A00000000000000000000016 /* ApplicationView.swift in Sources */,
 				A00000000000000000000015 /* OncePressView.swift in Sources */,
 				A00000000000000000000014 /* OncePressStore.swift in Sources */,
 				A00000000000000000000013 /* ArtPage.swift in Sources */,
