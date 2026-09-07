@@ -20,11 +20,21 @@ struct BreathArtView: View {
                 .onChange(of: geometry.size.height) { height in updateCapacity(height: height) }
         }
         .background(Color.white.ignoresSafeArea())
+        .overlay(alignment: .top) {
+            if let message = store.errorMessage {
+                Text(message).font(.footnote).foregroundStyle(.secondary).padding(20)
+            }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("呼吸，已留下\(store.marks.count)条线")
+        .accessibilityHint(store.errorMessage ?? "")
         .accessibilityAction(named: "开始吸气", beginInhale)
         .accessibilityAction(named: "结束吸气", endInhale)
-        .onChange(of: isActive) { active in if !active { cancelInhale() } }
+        .onAppear { if isActive { BreathHaptics.shared.prepare() } }
+        .onChange(of: isActive) { active in
+            if active { BreathHaptics.shared.prepare() }
+            else { cancelInhale() }
+        }
         .task(id: releases.last?.id) {
             do {
                 while let first = releases.first {
@@ -52,13 +62,15 @@ struct BreathArtView: View {
     }
 
     private func beginInhale() {
-        guard isActive else { return }
+        guard isActive, store.beganAt == nil else { return }
         store.begin()
+        BreathHaptics.shared.begin()
     }
 
     private func endInhale() {
         guard isActive, store.beganAt != nil else { return }
         store.end()
+        BreathHaptics.shared.release()
         if let mark = store.marks.last {
             releases.append(Release(id: mark.id, duration: mark.duration, date: .now))
         }
@@ -66,6 +78,7 @@ struct BreathArtView: View {
 
     private func cancelInhale() {
         store.cancel()
+        BreathHaptics.shared.cancel()
         releases = []
     }
 

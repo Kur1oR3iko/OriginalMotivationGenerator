@@ -12,10 +12,14 @@ struct DormancyArtView: View {
                 Color.white.ignoresSafeArea()
                 if store.isObserving {
                     TimelineView(.animation(minimumInterval: reduceMotion ? 1 : 1.0 / 30.0, paused: !isActive)) { timeline in
-                        GardenDrawing(seed: store.record.seed, growth: DormancyStore.growth(for: store.seconds(at: timeline.date)))
+                        GardenDrawing(seed: store.record.seed,
+                                      growth: DormancyStore.growth(for: store.seconds(at: timeline.date)),
+                                      habitatSeconds: store.habitatSeconds,
+                                      observationTime: store.observationTime(at: timeline.date),
+                                      reduceMotion: reduceMotion)
                     }
                     .padding(.top, 44)
-                    .accessibilityLabel("正在回退的花草园")
+                    .accessibilityLabel("正在回退的苗圃，受到打扰的动物逐渐离开或藏起")
                     .transition(.opacity)
                 } else {
                     Button {
@@ -143,16 +147,27 @@ private struct SketchLock: View {
 struct GardenDrawing: View {
     let seed: UInt64
     let growth: Double
+    var habitatSeconds: TimeInterval = 30 * 86_400
+    var observationTime: TimeInterval = 0
+    var reduceMotion = false
 
     var body: some View {
         Canvas { context, size in
             let scale = min(size.width / 950, size.height / 650)
             let inkScale = max(0.7, scale)
-            for index in 0..<72 {
+            let ecology = GardenEcology(seed: seed, growth: growth, habitatSeconds: habitatSeconds,
+                                        observationTime: observationTime, reduceMotion: reduceMotion)
+            ecology.drawGround(in: &context, size: size, inkScale: inkScale)
+            for index in 0..<52 {
                 drawGrass(index, in: &context, size: size, inkScale: inkScale)
             }
-            for index in 0..<33 {
+            for index in 0..<GardenPopulation.flowerCount {
                 drawFlower(index, in: &context, size: size, inkScale: inkScale)
+            }
+            ecology.drawAnimals(in: &context, size: size, inkScale: inkScale)
+            // A few foreground blades cover the rabbit and snail naturally.
+            for index in 52..<72 {
+                drawGrass(index, in: &context, size: size, inkScale: inkScale)
             }
             if growth > 0 {
                 // Sparse soil strokes keep the lower edge open instead of drawing a hard horizon.
@@ -171,22 +186,19 @@ struct GardenDrawing: View {
     }
 
     private func random(_ index: Int, _ channel: Int) -> Double {
-        var value = seed &+ UInt64(index + 1) &* 0x9E3779B97F4A7C15 &+ UInt64(channel + 1) &* 0xBF58476D1CE4E5B9
-        value = (value ^ (value >> 30)) &* 0xBF58476D1CE4E5B9
-        value = (value ^ (value >> 27)) &* 0x94D049BB133111EB
-        return Double((value ^ (value >> 31)) >> 11) / 9_007_199_254_740_992
+        GardenRandom.value(seed: seed, index: index, channel: channel)
     }
 
-    private func stage(from start: Double, to end: Double) -> CGFloat {
-        let t = min(1, max(0, (growth - start) / (end - start)))
-        return CGFloat(t * t * (3 - 2 * t))
+    private func stage(_ progress: Double, from start: Double, to end: Double) -> CGFloat {
+        let t = min(1, max(0, (progress - start) / (end - start)))
+        return CGFloat(t)
     }
 
     private func drawGrass(_ index: Int, in context: inout GraphicsContext, size: CGSize, inkScale: CGFloat) {
-        let start = random(index, 0) * 0.42
-        let amount = stage(from: start, to: min(1, start + 0.4))
+        let amount = CGFloat(GardenPopulation.grass(index: index, growth: growth).size)
         guard amount > 0 else { return }
-        let base = CGPoint(x: size.width * (0.05 + (Double(index) + random(index, 1)) / 72 * 0.9),
+        let position = Double((index * 29) % 72)
+        let base = CGPoint(x: size.width * (0.05 + (position + random(index, 1)) / 72 * 0.9),
                            y: size.height * (0.87 + random(index, 2) * 0.04))
         let height = size.height * (0.035 + random(index, 3) * 0.23) * amount
         for blade in 0..<4 {
@@ -197,42 +209,69 @@ struct GardenDrawing: View {
             path.addQuadCurve(to: tip, control: CGPoint(x: base.x + lean * 0.15, y: base.y - height * 0.63))
             context.stroke(path, with: .color(.black.opacity(0.18 + random(index, 9) * 0.22)),
                            style: StrokeStyle(lineWidth: (0.55 + random(index, 10) * 0.4) * inkScale, lineCap: .round))
+            if index.isMultiple(of: 7) && blade == 3 {
+                for grain in 0..<6 {
+                    let y = tip.y + CGFloat(grain) * 3 * inkScale
+                    let side: CGFloat = grain.isMultiple(of: 2) ? -1 : 1
+                    drawLeaf(from: CGPoint(x: tip.x, y: y + 3 * inkScale),
+                             to: CGPoint(x: tip.x + side * 4 * inkScale * amount, y: y - 2 * inkScale),
+                             width: 1.4 * inkScale * amount, in: &context, inkScale: inkScale)
+                }
+            }
         }
     }
 
     private func drawFlower(_ index: Int, in context: inout GraphicsContext, size: CGSize, inkScale: CGFloat) {
-        let start = 0.08 + random(index, 12) * 0.36
-        let amount = stage(from: start, to: min(0.92, start + 0.48))
+        let life = GardenPopulation.flower(index: index, growth: growth)
+        let amount = CGFloat(life.size)
         guard amount > 0 else { return }
         let x = size.width * (0.08 + (Double(index) + random(index, 13) * 0.8) / 33 * 0.84)
         let base = CGPoint(x: x, y: size.height * (0.865 + random(index, 14) * 0.025))
         let height = size.height * (0.22 + random(index, 15) * 0.49) * amount
         let lean = (random(index, 16) - 0.5) * size.width * 0.06 * amount
-        let top = CGPoint(x: base.x + lean, y: base.y - height)
+        let aged = index.isMultiple(of: 6) ? CGFloat(life.ageProgress(from: 12, to: 24)) : 0
+        let top = CGPoint(x: base.x + lean + height * 0.04 * aged, y: base.y - height + height * 0.09 * aged)
+        let control = CGPoint(x: base.x - lean * 0.5, y: base.y - height * 0.55)
+        func stemPoint(_ t: CGFloat) -> CGPoint {
+            let u = 1 - t
+            return CGPoint(x: u * u * base.x + 2 * u * t * control.x + t * t * top.x,
+                           y: u * u * base.y + 2 * u * t * control.y + t * t * top.y)
+        }
         var stem = Path()
         stem.move(to: base)
-        stem.addQuadCurve(to: top, control: CGPoint(x: base.x - lean * 0.5, y: base.y - height * 0.55))
+        stem.addQuadCurve(to: top, control: control)
         pencilStroke(stem, in: &context, width: 0.9 * inkScale, opacity: 0.48)
 
-        for leaf in 0..<5 {
+        let leafCount = index % 4 == 2 ? 3 : 5
+        for leaf in 0..<leafCount {
             let t = CGFloat(leaf + 1) / 7
-            let leafAmount = stage(from: start + Double(leaf) * 0.045, to: min(1, start + 0.37 + Double(leaf) * 0.045))
-            let origin = CGPoint(x: base.x - lean * t * (1 - t) + lean * t * t,
-                                 y: base.y - height * (1.1 * t - 0.1 * t * t))
+            let leafAmount = stage(life.maturity, from: Double(leaf) * 0.09, to: 0.6 + Double(leaf) * 0.1)
+            let origin = stemPoint(t)
             let side: CGFloat = leaf.isMultiple(of: 2) ? -1 : 1
-            let length = min(size.width * 0.06, size.height * 0.085) * leafAmount * (0.7 + random(index, 18 + leaf) * 0.5)
-            let tip = CGPoint(x: origin.x + side * length, y: origin.y - length * 0.5)
-            drawLeaf(from: origin, to: tip, width: length * 0.2, in: &context, inkScale: inkScale)
+            let length = min(size.width * 0.045, size.height * 0.075) * leafAmount * (0.65 + random(index, 18 + leaf) * 0.55)
+            let tip = CGPoint(x: origin.x + side * length, y: origin.y - length * (0.5 - 0.65 * aged))
+            let damaged = (index + leaf).isMultiple(of: 5) ? CGFloat(life.ageProgress(from: 7, to: 18)) : 0
+            drawLeaf(from: origin, to: tip, width: length * (index % 4 == 1 ? 0.34 : 0.18),
+                     in: &context, inkScale: inkScale, veins: true, lobed: index % 4 == 0, damage: damaged)
         }
 
-        let bloom = stage(from: 0.47 + random(index, 26) * 0.25, to: 0.82 + random(index, 27) * 0.18)
-        let radius = size.height * (0.012 + random(index, 28) * 0.012) * (0.12 + 0.88 * bloom) * amount
+        let bloom = stage(life.maturity, from: 0.4, to: 1)
+        let radius = size.height * (0.012 + random(index, 28) * 0.012) * (0.12 + 0.88 * bloom) * amount * (1 - 0.25 * aged)
         if index % 3 == 0 {
             drawDaisy(at: top, radius: radius, bloom: bloom, in: &context, inkScale: inkScale)
         } else if index % 3 == 1 {
             drawCup(at: top, radius: radius * 1.3, bloom: bloom, in: &context, inkScale: inkScale)
         } else {
             drawSprig(at: top, radius: radius, bloom: bloom, in: &context, inkScale: inkScale)
+        }
+        if index % 5 == 3 {
+            let origin = stemPoint(0.68)
+            let branchTip = CGPoint(x: top.x - height * 0.1, y: top.y + height * 0.16)
+            var branch = Path()
+            branch.move(to: origin)
+            branch.addQuadCurve(to: branchTip, control: CGPoint(x: branchTip.x, y: origin.y))
+            pencilStroke(branch, in: &context, width: 0.65 * inkScale, opacity: 0.32)
+            drawDaisy(at: branchTip, radius: radius * 0.7, bloom: bloom, in: &context, inkScale: inkScale)
         }
     }
 
@@ -243,7 +282,8 @@ struct GardenDrawing: View {
         echo.stroke(path, with: .color(.black.opacity(opacity * 0.22)), lineWidth: width * 0.65)
     }
 
-    private func drawLeaf(from base: CGPoint, to tip: CGPoint, width: CGFloat, in context: inout GraphicsContext, inkScale: CGFloat) {
+    private func drawLeaf(from base: CGPoint, to tip: CGPoint, width: CGFloat, in context: inout GraphicsContext,
+                          inkScale: CGFloat, veins: Bool = false, lobed: Bool = false, damage: CGFloat = 0) {
         guard width > 0.05 else { return }
         let middle = CGPoint(x: (base.x + tip.x) / 2, y: (base.y + tip.y) / 2)
         let distance = max(1, hypot(tip.x - base.x, tip.y - base.y))
@@ -252,12 +292,40 @@ struct GardenDrawing: View {
         leaf.move(to: base)
         leaf.addQuadCurve(to: tip, control: CGPoint(x: middle.x + normal.x, y: middle.y + normal.y))
         leaf.addQuadCurve(to: base, control: CGPoint(x: middle.x - normal.x, y: middle.y - normal.y))
+        if lobed || damage > 0 {
+            leaf = Path()
+            for side: CGFloat in [1, -1] {
+                for step in 0...24 {
+                    let t = side > 0 ? CGFloat(step) / 24 : 1 - CGFloat(step) / 24
+                    var profile = sin(.pi * t) * 0.52
+                    if lobed { profile *= 0.85 + 0.15 * cos(t * .pi * 10) }
+                    if side > 0 { profile *= 1 - damage * 0.8 * exp(-pow((t - 0.63) / 0.08, 2)) }
+                    let point = CGPoint(x: base.x + (tip.x - base.x) * t + normal.x * profile * side,
+                                        y: base.y + (tip.y - base.y) * t + normal.y * profile * side)
+                    if side > 0 && step == 0 { leaf.move(to: point) } else { leaf.addLine(to: point) }
+                }
+            }
+            leaf.closeSubpath()
+        }
         context.fill(leaf, with: .color(.black.opacity(0.035)))
         pencilStroke(leaf, in: &context, width: 0.65 * inkScale, opacity: 0.32)
         var vein = Path()
         vein.move(to: base)
         vein.addLine(to: tip)
         context.stroke(vein, with: .color(.black.opacity(0.17)), lineWidth: 0.45 * inkScale)
+        if veins {
+            var fineVeins = Path()
+            for step in 1...4 {
+                let t = CGFloat(step) / 6
+                let origin = CGPoint(x: base.x + (tip.x - base.x) * t, y: base.y + (tip.y - base.y) * t)
+                for side: CGFloat in [-1, 1] {
+                    fineVeins.move(to: origin)
+                    fineVeins.addLine(to: CGPoint(x: origin.x + (tip.x - base.x) * 0.12 + normal.x * 0.35 * sin(.pi * t) * side,
+                                                 y: origin.y + (tip.y - base.y) * 0.12 + normal.y * 0.35 * sin(.pi * t) * side))
+                }
+            }
+            context.stroke(fineVeins, with: .color(.black.opacity(0.12)), lineWidth: 0.4 * inkScale)
+        }
     }
 
     private func drawDaisy(at point: CGPoint, radius: CGFloat, bloom: CGFloat, in context: inout GraphicsContext, inkScale: CGFloat) {

@@ -31,7 +31,7 @@ struct ContentView: View {
     @StateObject private var onceStore = OncePressStore.shared
     @StateObject private var application = ApplicationStore()
     @StateObject private var deathClock = DeathClockStore()
-    @StateObject private var breath = BreathStore()
+    @StateObject private var breath = BreathStore.shared
     @StateObject private var dormancy = DormancyStore.shared
     @StateObject private var unrecordedCamera = UnrecordedCamera()
     @State private var sceneID = UUID()

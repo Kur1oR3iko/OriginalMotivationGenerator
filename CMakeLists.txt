@@ -15,6 +15,7 @@ set(APP_SOURCES
     "${APP_ROOT}/SingleTouchSurface.swift"
     "${APP_ROOT}/BodyArtViews.swift"
     "${APP_ROOT}/DormancyViews.swift"
+    "${APP_ROOT}/GardenEcology.swift"
     "${APP_ROOT}/UnrecordedCamera.swift"
     "${APP_ROOT}/DeathClock.swift"
     "${APP_ROOT}/DeathClockView.swift"
@@ -22,6 +23,7 @@ set(APP_SOURCES
     "${APP_ROOT}/OncePressView.swift"
     "${APP_ROOT}/ApplicationView.swift"
     "${APP_ROOT}/AppSoundPlayer.swift"
+    "${APP_ROOT}/BreathHaptics.swift"
     "${APP_ROOT}/Sounds/page.mp3"
     "${APP_ROOT}/Sounds/click.wav"
     "${APP_ROOT}/Sounds/send.wav"
@@ -42,7 +44,7 @@ set_source_files_properties(
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources
 )
 add_executable(OriginalMotivationGenerator ${APP_SOURCES})
-target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit" "-framework AVFoundation")
+target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit" "-framework AVFoundation" "-framework CoreHaptics")
 
 set_target_properties(OriginalMotivationGenerator PROPERTIES
     MACOSX_BUNDLE TRUE
