@@ -1,7 +1,7 @@
 import Foundation
 
 enum ArtPage: Int, CaseIterable, Identifiable {
-    case phrase, clock, once, letter
+    case phrase, clock, once, letter, death
 
     var id: Int { rawValue }
     var title: String {
@@ -10,6 +10,7 @@ enum ArtPage: Int, CaseIterable, Identifiable {
         case .clock: return "25小时时钟"
         case .once: return "只能按一次"
         case .letter: return "信"
+        case .death: return "死之钟"
         }
     }
     var symbol: String {
@@ -18,6 +19,7 @@ enum ArtPage: Int, CaseIterable, Identifiable {
         case .clock: return "clock"
         case .once: return "circle"
         case .letter: return "envelope"
+        case .death: return "hourglass"
         }
     }
     func offset(by distance: Int) -> ArtPage {

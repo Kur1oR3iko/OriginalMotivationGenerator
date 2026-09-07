@@ -11,6 +11,8 @@ set(APP_SOURCES
     "${APP_ROOT}/OriginalMotivationGeneratorApp.swift"
     "${APP_ROOT}/ContentView.swift"
     "${APP_ROOT}/ArtPage.swift"
+    "${APP_ROOT}/DeathClock.swift"
+    "${APP_ROOT}/DeathClockView.swift"
     "${APP_ROOT}/OncePressStore.swift"
     "${APP_ROOT}/OncePressView.swift"
     "${APP_ROOT}/LetterView.swift"

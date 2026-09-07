@@ -24,6 +24,11 @@ jobs:
           swiftc App/OncePressStore.swift Tests/OncePressStoreTests.swift -o "$RUNNER_TEMP/omg-once-tests"
           "$RUNNER_TEMP/omg-once-tests"
 
+      - name: Check death clock assumptions and persistence
+        run: |
+          swiftc App/DeathClock.swift Tests/DeathClockTests.swift -o "$RUNNER_TEMP/omg-death-tests"
+          "$RUNNER_TEMP/omg-death-tests"
+
       - name: Build for iOS Simulator
         run: >-
           xcodebuild

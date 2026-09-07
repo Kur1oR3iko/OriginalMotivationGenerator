@@ -60,7 +60,8 @@ struct LetterView: View {
     var body: some View {
         GeometryReader { geometry in
             let compact = geometry.size.height < 400
-            VStack(spacing: 0) {
+            HStack(alignment: .bottom, spacing: compact ? 12 : 24) {
+                VStack(spacing: 0) {
                 HStack(spacing: 16) {
                     Text("收信人")
                         .font(.body)
@@ -100,7 +101,11 @@ struct LetterView: View {
                 }
                 .padding(.top, compact ? 8 : 20)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .overlay(alignment: .bottomTrailing) {
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                VStack {
+                    Spacer(minLength: 0)
                     Button {
                         let lines = editor.snapshot()
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -118,8 +123,14 @@ struct LetterView: View {
                     .buttonStyle(.plain)
                     .disabled(draft.isSending || draft.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     .accessibilityLabel("发送")
-                    .padding(.bottom, compact ? 8 : 16)
-                    .padding(.trailing, compact ? 8 : 12)
+                    .padding(.bottom, compact ? 4 : 12)
+                }
+                .frame(width: compact ? 64 : 80)
+                .frame(maxHeight: .infinity)
+                .background(Color.white)
+                .overlay(alignment: .leading) {
+                    Rectangle().fill(Color.black.opacity(0.08)).frame(width: 1)
+                        .accessibilityHidden(true)
                 }
             }
             .frame(maxWidth: 820)
@@ -207,6 +218,8 @@ private struct LetterTextEditor: UIViewRepresentable {
         view.keyboardDismissMode = .interactive
         view.contentInsetAdjustmentBehavior = .never
         view.delegate = context.coordinator
+        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         view.accessibilityLabel = "文本"
         let toolbar = UIToolbar()
         toolbar.items = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),

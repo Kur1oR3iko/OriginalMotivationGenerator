@@ -25,6 +25,8 @@
 		A00000000000000000000020 /* click.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000020 /* click.wav */; };
 		A00000000000000000000021 /* send.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000021 /* send.wav */; };
 		A00000000000000000000022 /* tick.wav in Resources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000022 /* tick.wav */; };
+        A00000000000000000000023 /* DeathClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000023; };
+        A00000000000000000000024 /* DeathClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000024; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		B00000000000000000000020 /* click.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/click.wav; sourceTree = "<group>"; };
 		B00000000000000000000021 /* send.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/send.wav; sourceTree = "<group>"; };
 		B00000000000000000000022 /* tick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Sounds/tick.wav; sourceTree = "<group>"; };
+        B00000000000000000000023 /* DeathClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathClock.swift; sourceTree = "<group>"; };
+        B00000000000000000000024 /* DeathClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathClockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 			children = (
 				B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */,
 				B00000000000000000000001 /* ContentView.swift */,
+                B00000000000000000000023 /* DeathClock.swift */,
+                B00000000000000000000024 /* DeathClockView.swift */,
 				B00000000000000000000022 /* tick.wav */,
 				B00000000000000000000021 /* send.wav */,
 				B00000000000000000000020 /* click.wav */,
@@ -181,6 +187,8 @@
 			files = (
 				A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */,
 				A00000000000000000000001 /* ContentView.swift in Sources */,
+                A00000000000000000000023 /* DeathClock.swift in Sources */,
+                A00000000000000000000024 /* DeathClockView.swift in Sources */,
 				A00000000000000000000018 /* AppSoundPlayer.swift in Sources */,
 				A00000000000000000000016 /* LetterView.swift in Sources */,
 				A00000000000000000000015 /* OncePressView.swift in Sources */,

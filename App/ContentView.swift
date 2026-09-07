@@ -30,6 +30,8 @@ struct ContentView: View {
     @State private var indicatorPulse = 0
     @StateObject private var onceStore = OncePressStore.shared
     @StateObject private var letterDraft = LetterDraft()
+    @StateObject private var deathClock = DeathClockStore()
+    @AppStorage("originalMotivationGenerator.v1.deathClockSouthernHemisphere") private var deathClockSouthernHemisphere = false
     @State private var turnAxis: Axis = .vertical
     @State private var pageTravel: CGFloat = 0
     @State private var isTurningPage = false
@@ -41,18 +43,19 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { proxy in
             let horizontal = turnAxis == .horizontal
-            let neighborSettings = horizontal ? showingSettings : !showingSettings
             let previousPage = horizontal ? selectedPage.offset(by: -1) : selectedPage
             let nextPage = horizontal ? selectedPage.offset(by: 1) : selectedPage
+            let previousSettings = horizontal ? settingsForDestination(previousPage) : !showingSettings
+            let nextSettings = horizontal ? settingsForDestination(nextPage) : !showingSettings
             // Horizontal neighbors wrap across all artworks; vertical neighbors open the matching settings.
             ZStack {
-                page(settings: neighborSettings, feature: previousPage)
+                page(settings: previousSettings, feature: previousPage)
                     .offset(x: horizontal ? -proxy.size.width : 0,
                             y: horizontal ? 0 : -proxy.size.height)
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
                 page(settings: showingSettings, feature: selectedPage)
-                page(settings: neighborSettings, feature: nextPage)
+                page(settings: nextSettings, feature: nextPage)
                     .offset(x: horizontal ? proxy.size.width : 0,
                             y: horizontal ? 0 : proxy.size.height)
                     .allowsHitTesting(false)
@@ -94,7 +97,7 @@ struct ContentView: View {
                 transaction.disablesAnimations = true
                 withTransaction(transaction) {
                     if turnAxis == .horizontal {
-                        selectedPage = selectedPage.offset(by: horizontalStep)
+                        finishHorizontalTurn()
                     } else {
                         showingSettings.toggle()
                     }
@@ -161,6 +164,16 @@ struct ContentView: View {
                 }
             case (.letter, true):
                 ArtIntroductionView(title: "信", introduction: "你知道的，很遗憾，这封信并没能发出去")
+            case (.death, false):
+                DeathClockView(store: deathClock, southernHemisphere: deathClockSouthernHemisphere,
+                               isActive: selectedPage == .death && !showingSettings && !isTurningPage && scenePhase == .active) { editing in
+                    if selectedPage == .death && !showingSettings { isEditingText = editing }
+                }
+            case (.death, true):
+                DeathClockSettingsView(southernHemisphere: $deathClockSouthernHemisphere) {
+                    deathClock.startAgain()
+                    turnPage(.up)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -191,6 +204,18 @@ struct ContentView: View {
         }
     }
 
+    private func settingsForDestination(_ destination: ArtPage) -> Bool {
+        // First-time onboarding belongs to the artwork's home, including when swiping from another settings page.
+        if destination == .death && deathClock.profile == nil { return false }
+        return showingSettings
+    }
+
+    private func finishHorizontalTurn() {
+        let destination = selectedPage.offset(by: horizontalStep)
+        showingSettings = settingsForDestination(destination)
+        selectedPage = destination
+    }
+
     private func turnPage(_ direction: UISwipeGestureRecognizer.Direction) {
         guard !isTurningPage else { return }
         if isEditingText {
@@ -205,7 +230,7 @@ struct ContentView: View {
         }
         guard !reduceMotion else {
             if horizontal {
-                selectedPage = selectedPage.offset(by: horizontalStep)
+                finishHorizontalTurn()
             } else {
                 showingSettings.toggle()
             }
