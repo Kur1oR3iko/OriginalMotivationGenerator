@@ -19,7 +19,7 @@ struct DormancyArtView: View {
                                       reduceMotion: reduceMotion)
                     }
                     .padding(.top, 44)
-                    .accessibilityLabel("正在回退的苗圃，受到打扰的动物逐渐离开或藏起")
+                    .accessibilityLabel(L("正在回退的苗圃，受到打扰的动物逐渐离开或藏起"))
                     .transition(.opacity)
                 } else {
                     Button {
@@ -29,7 +29,7 @@ struct DormancyArtView: View {
                             SketchLock()
                                 .frame(width: min(200, geometry.size.height * 0.4),
                                        height: min(200, geometry.size.height * 0.4))
-                            Text("打扰并观察")
+                            Text(L("打扰并观察"))
                                 .font(.system(size: geometry.size.width >= 900 ? 24 : 20, weight: .regular))
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -37,7 +37,7 @@ struct DormancyArtView: View {
                     }
                     .buttonStyle(.plain)
                     .disabled(!isActive)
-                    .accessibilityLabel("打扰并观察")
+                    .accessibilityLabel(L("打扰并观察"))
                     .transition(.opacity)
                 }
 
@@ -51,7 +51,7 @@ struct DormancyArtView: View {
                     .padding(.top, 13)
                     Spacer(minLength: 12)
                     if store.isObserving {
-                        Button("离开") { store.leave() }
+                        Button(L("离开")) { store.leave() }
                             .font(.system(size: 17))
                             .frame(minWidth: 44, minHeight: 44)
                             .buttonStyle(.plain)
@@ -78,18 +78,18 @@ struct DormancyArtView: View {
 
     private func growthTime(_ seconds: TimeInterval) -> String {
         let minutes = Int(max(0, seconds)) / 60
-        return "已经生长\(minutes / 1440)天\(minutes / 60 % 24)小时\(minutes % 60)分"
+        return L("已经生长%ld天%ld小时%ld分", minutes / 1440, minutes / 60 % 24, minutes % 60)
     }
 }
 
 struct DormancySettingsView: View {
     var body: some View {
-        ArtSettingsLayout(title: "休眠", introduction: "如上，请你不要打扰它们生长") {
+        ArtSettingsLayout(title: L("休眠"), introduction: L("如上，请你不要打扰它们生长")) {
             VStack(alignment: .leading, spacing: 14) {
-                Text("上锁后，苗圃将按真实时间生长，30天后将会长成完整的形态。")
-                Text("当你观察时，苗圃将以600倍的速度退化，直至归零")
-                Text("点击右上角离开后，苗圃将从剩下的时间继续生长")
-                Text("观察时翻页或关闭软件，会暂停退化，但是只有点击“离开”才能恢复生长")
+                Text(L("上锁后，苗圃将按真实时间生长，30天后将会长成完整的形态。"))
+                Text(L("当你观察时，苗圃将以600倍的速度退化，直至归零"))
+                Text(L("点击右上角离开后，苗圃将从剩下的时间继续生长"))
+                Text(L("观察时翻页或关闭软件，会暂停退化，但是只有点击“离开”才能恢复生长"))
             }
             .font(.footnote)
             .foregroundStyle(.secondary)

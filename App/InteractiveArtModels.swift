@@ -29,7 +29,7 @@ final class BreathStore: ObservableObject {
             nextMarkID = marks.count
         } catch {
             unreadableRecord = true
-            errorMessage = "暂时无法读取已有的呼吸线条。"
+            errorMessage = L("暂时无法读取已有的呼吸线条。")
         }
     }
 
@@ -75,7 +75,7 @@ final class BreathStore: ObservableObject {
             try data.write(to: fileURL, options: .atomic)
             errorMessage = nil
         } catch {
-            errorMessage = "呼吸线条暂时无法保存，请稍后再试。"
+            errorMessage = L("呼吸线条暂时无法保存，请稍后再试。")
         }
     }
 

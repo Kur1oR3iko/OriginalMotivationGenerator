@@ -1,0 +1,23 @@
+{
+  "zh-Hans": {
+    "name": "墨尔本草稿",
+    "subtitle": "关于时间、身体与留白的互动作品",
+    "promotionalText": "对于思考和审美的一些探索",
+    "keywords": "艺术,互动,时间,文字,短语,呼吸,苗圃,素描,时钟,创意,离线,实验",
+    "description": "一组关于时间、身体、语言与观看的互动作品，由kurio在墨尔本无聊时制作。\n\n没有分数，也没有必须完成的任务。你可以简单交互，让几件小事发生。\n\n目前有八件作品：\n- 原始动机生成器\n- 25 小时时钟\n- 只能按一次\n- 申请\n- 死之钟\n- 呼吸\n- 没有拍下\n- 休眠\n\n三指左右滑动切换作品，上下滑动进入各自的介绍与设置。Mac 或外接键盘也可使用方向键。\n\n注意：死之钟是一件基于自设时间的艺术作品，不提供医学或寿命预测。"
+  },
+  "en-US": {
+    "name": "Melbourne Drafts",
+    "subtitle": "Small works about being alive",
+    "promotionalText": "Some explorations of thought and aesthetics.",
+    "keywords": "art,interactive,time,breathing,poetry,garden,offline,creative,contemplation",
+    "description": "A collection of interactive works about time, the body, language and the act of looking, made by kurio while bored in Melbourne.\n\nThere are no scores or tasks to complete. Simply interact, and let a few small things happen.\n\nThere are currently eight works:\n- Original Motivation Generator\n- 25-Hour Clock\n- Only Once\n- Application\n- Death Clock\n- Breath\n- Not Taken\n- Dormancy\n\nSwipe left or right with three fingers to change works. Swipe up or down for each work’s introduction and settings. On Mac or with a hardware keyboard, use the arrow keys.\n\nNote: Death Clock is an artwork based on a lifespan you choose. It does not provide medical advice or predict your lifespan."
+  },
+  "ja": {
+    "name": "メルボルン草稿",
+    "subtitle": "時間と身体、余白のための小さな作品",
+    "promotionalText": "思考と美意識をめぐる、いくつかの探求",
+    "keywords": "アート,インタラクティブ,時間,呼吸,言葉,庭,スケッチ,時計,創作,オフライン",
+    "description": "時間、身体、言葉、そして見ることをめぐるインタラクティブ作品集。メルボルンで退屈していたkurioが制作しました。\n\n点数も、必ず終えなければならない課題もありません。簡単な操作で、いくつかの小さな出来事を起こせます。\n\n現在、八つの作品があります：\n- 原始動機生成器\n- 25時間時計\n- 一度だけ\n- 申請\n- 死の時計\n- 呼吸\n- 撮らなかった\n- 休眠\n\n3本指で左右にスワイプすると作品を切り替え、上下にスワイプすると各作品の紹介と設定を開きます。Macや外付けキーボードでは矢印キーも使えます。\n\n注：死の時計は、自分で決めた寿命をもとにした芸術作品です。医学的な助言や寿命の予測は行いません。"
+  }
+}

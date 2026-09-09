@@ -3,9 +3,15 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleDevelopmentRegion</key>
-    <string>zh_CN</string>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>zh-Hans</string>
+        <string>ja</string>
+    </array>
     <key>CFBundleDisplayName</key>
-    <string>原始动机生成器</string>
+    <string>Melbourne Drafts</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -23,7 +29,7 @@
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
     <key>NSCameraUsageDescription</key>
-    <string>用于“没有拍下”的实时取景，不会拍摄或保存照片。</string>
+    <string>Used for the live viewfinder in Not Taken. No photos are captured or saved.</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UILaunchScreen</key>

@@ -1,0 +1,142 @@
+%@视图	%@ view	%@表示
+%@，当前日期	%@, today	%@、今日
+%ld–%ld年	%ld–%ld	%ld–%ld年
+%ld天	%ld days	%ld日
+%ld岁	%ld years	%ld歳
+%ld年	%ld	%ld年
+%ld年%@	%2$@ %1$ld	%ld年%@
+%ld年%ld月%ld日	%ld-%02ld-%02ld	%ld年%ld月%ld日
+%ld日	%ld	%ld日
+%ld日 · %@	%ld · %@	%ld日 · %@
+0.5秒	0.5 seconds	0.5秒
+10秒	10 seconds	10秒
+1分钟	1 minute	1分
+1秒	1 second	1秒
+25小时时钟	25-Hour Clock	25時間時計
+30秒	30 seconds	30秒
+5分钟	5 minutes	5分
+5秒	5 seconds	5秒
+kurio最新力作（2）	Kurio’s latest work (2)	Kurioの最新作（2）
+yyyy年M月d日HH时mm分ss秒	yyyy-MM-dd HH:mm:ss	yyyy年M月d日 HH:mm:ss
+上一个功能	Previous work	前の作品
+上一页	Previous page	前のページ
+上锁后，苗圃将按真实时间生长，30天后将会长成完整的形态。	Once locked, the nursery grows in real time, reaching its full form after 30 days.	鍵をかけると、苗圃は現実の時間に沿って育ち、30日後に完全な姿になります。
+下一个功能	Next work	次の作品
+下一页	Next page	次のページ
+与那个人再见一定的次数	See that person a certain number of times	あの人と、あと何度か会う
+东京	Tokyo	東京
+为什么想要进去	Why would you like to enter?	なぜ入りたいのですか
+也许你已经按过了	Perhaps you already have.	もしかすると、もう押したのかもしれません
+于%@按下	Pressed on %@	%@に押されました
+享受%ld个夏天	Enjoy %ld summers	夏を%ld回楽しむ
+享受接下来额外的人生吧	Enjoy the extra life ahead.	これからの余分な人生を楽しんでください
+从2000年1月1日00:00 UTC开始计时。一分钟仍是60秒，一小时仍是60分钟，一天是25小时。每周7天，每年12个月，月长与闰年遵循公历。	Time begins at 00:00 UTC on 1 January 2000. A minute still has 60 seconds, an hour still has 60 minutes, and a day has 25 hours. Weeks have 7 days and years have 12 months; month lengths and leap years follow the Gregorian calendar.	2000年1月1日00:00 UTCを起点に時を刻みます。1分は60秒、1時間は60分のまま、1日は25時間。1週間は7日、1年は12か月で、各月の日数とうるう年はグレゴリオ暦に従います。
+休眠	Dormancy	休眠
+伦敦	London	ロンドン
+你决定记录下这一刻	You decided to record this moment.	あなたは、この瞬間を記録しようと決めた
+你的名字	Your name	あなたの名前
+倒计时%ld	Countdown: %ld	カウントダウン、%ld
+全部组合已生成完毕	Every combination has appeared.	すべての組み合わせが表示されました
+关于活着的其他一些想法	Some other thoughts on being alive.	生きていることについての、ほかのいくつかの考え
+其他时区	Other time zones	ほかのタイムゾーン
+切换到%@	Switch to %@	%@へ移動
+切换到主页	Back to the work	作品に戻る
+切换间隔	Interval	切り替え間隔
+北京 / 上海	Beijing / Shanghai	北京 / 上海
+协调世界时	Coordinated Universal Time	協定世界時
+印度	India	インド
+原始动机生成器	Original Motivation Generator	原始動機生成器
+只能按一次	Only Once	一度だけ
+吃%ld顿早餐	Eat %ld breakfasts	朝食を%ld回食べる
+吸气时按住屏幕，呼气时松开。	Hold the screen as you inhale. Release as you exhale.	息を吸うときは画面を押し、吐くときは離してください。
+呼吸	Breath	呼吸
+呼吸线条暂时无法保存，请稍后再试。	Your breathing traces could not be saved. Please try again later.	呼吸の線を保存できませんでした。しばらくしてからお試しください。
+呼吸，已留下%ld条线	Breath, %ld traces left	呼吸、%ld本の線が残っています
+回%ld次老家	Visit your hometown %ld times	故郷に%ld回帰る
+在这段时间你还可以：	In that time, you could still:	その間に、あなたはまだ：
+墨尔本	Melbourne	メルボルン
+如上，请你不要打扰它们生长	As above, please let them grow undisturbed.	ご覧のとおり、どうか彼らの成長を邪魔しないでください
+完成	Done	完了
+岁	years old	歳
+已展开	Expanded	展開済み
+已收起	Collapsed	折りたたみ済み
+已经生长%ld天%ld小时%ld分	Grown for %ldd %ldh %ldm	成長時間：%ld日%ld時間%ld分
+巴黎	Paris	パリ
+年	Year	年
+年龄	Age	年齢
+度过%ld个周末	Spend %ld weekends	週末を%ld回過ごす
+开启后，按所选节奏自动切换。\n点击短语生成下一条，并停止自动切换。查看设置或离开应用时暂停。	Phrases change automatically at your chosen interval.\nTap for a new phrase and to stop automatic playback. Playback pauses while viewing settings or leaving the app.	選んだ間隔でフレーズが自動的に切り替わります。\nタップすると次のフレーズが現れ、自動再生が止まります。設定の表示中やアプリを離れている間は一時停止します。
+开始吸气	Begin inhaling	息を吸い始める
+当你观察时，苗圃将以600倍的速度退化，直至归零	While you observe, the nursery regresses at 600 times real time, until nothing remains.	観察している間、苗圃は600倍の速さで退化し、やがてゼロに戻ります
+当前年龄	Current age	現在の年齢
+当前日期	Today	今日
+快门，三秒后拍照	Shutter, simulated capture after three seconds	シャッター、3秒後に撮影を再現
+您今年多少岁了	How old are you?	あなたは今、何歳ですか
+您的一生还剩下：	Your life has this much left:	あなたの人生に残されているのは：
+您的预期寿命是？	How long do you expect to live?	何歳まで生きると思いますか？
+想不到能在这里遇见你，大蝽。	I never thought I would meet you here, Great Chun.	ここでお会いできるとは、大椿よ。
+或者说是%@ %@	Or, in other words, %@ %@	あるいは、%@ %@
+打开相机权限设置	Open camera permissions	カメラの権限設定を開く
+打开设置	Open settings	設定を開く
+打扰并观察	Disturb and observe	邪魔をして、観察する
+按下后按钮将永久消失	The button will disappear permanently after you press it.	押すと、このボタンは永久に消えます
+按南半球计算夏天	Count summers in the Southern Hemisphere	南半球の夏で数える
+提交	Submit	提出
+提交申请	Submit application	申請を提出
+搜索城市或时区	Search cities or time zones	都市やタイムゾーンを検索
+搜索时区	Search time zones	タイムゾーンを検索
+无法读取已有的按下记录。	The saved press record could not be read.	保存された記録を読み込めませんでした。
+日	Day	日
+日历范围，%@	Calendar range, %@	カレンダーの範囲、%@
+时区	Time zone	タイムゾーン
+时间的流速	The Flow of Time	時間の流れる速さ
+显示常用时区	Show common time zones	よく使うタイムゾーンを表示
+显示年月日	Show date	年月日を表示
+显示秒钟	Show seconds	秒を表示
+暂时无法保存按下记录，请稍后再试。	The press record could not be saved. Please try again later.	押した記録を保存できませんでした。しばらくしてからお試しください。
+暂时无法读取已有的呼吸线条。	Your saved breathing traces could not be read.	保存された呼吸の線を読み込めませんでした。
+月	Month	月
+查看全部时区	Show all time zones	すべてのタイムゾーンを表示
+欢迎你，鬼魂先生/女生	Welcome, dear ghost.	ようこそ、幽霊さん
+正在回退的苗圃，受到打扰的动物逐渐离开或藏起	A nursery in retreat. Disturbed animals leave or hide.	退化していく苗圃。驚いた動物たちは去るか、隠れていきます
+死之钟	Death Clock	死の時計
+每天多一个小时。	One more hour, every day.	毎日、もう1時間。
+每次呼吸留下一条灰线。新的线向上叠加，满屏时最早的一条离开。	Each breath leaves a grey line. New lines stack above the old ones. When the screen fills, the oldest line leaves.	呼吸のたびに灰色の線が残ります。新しい線は上へ積み重なり、画面がいっぱいになると、最も古い線が消えます。
+没有匹配的时区	No matching time zones	一致するタイムゾーンはありません
+没有拍下	Not Taken	撮らなかった
+注意：原始动机短语不涉及任何具体操作	Note: these phrases do not describe any specific action to carry out.	注：原始動機のフレーズは、具体的な行動を指示するものではありません
+洛杉矶	Los Angeles	ロサンゼルス
+点击切换到%@视图	Tap to switch to %@ view	タップして%@表示に切り替え
+点击右上角离开后，苗圃将从剩下的时间继续生长	Tap Leave in the top right to let the nursery grow again from its remaining time.	右上の「離れる」を押すと、苗圃は残った時間から再び成長します
+生成原始动机	Generate a new phrase	原始動機を生成
+申请	Application	申請
+申请人	Applicant	申請者
+申请已收到	Application received	申請を受け付けました
+申请已通过	Application approved	申請が承認されました
+申请已通过，你已进入一张空白页面	Application approved. You have entered a blank page.	申請が承認され、白紙のページに入りました
+申请理由	Reason for applying	申請理由
+申请表	Application form	申請書
+相机准备中	Preparing camera	カメラを準備しています
+相机暂时无法使用，请稍后再试	The camera is unavailable. Please try again later.	カメラを使用できません。しばらくしてからお試しください
+确定	Confirm	決定
+离开	Leave	離れる
+第%ld页，共%ld页，%@	Page %ld of %ld, %@	%ld/%ldページ、%@
+纽约	New York	ニューヨーク
+结束吸气	Finish inhaling	息を吸い終える
+继续	Continue	続ける
+舍弃	Discard	手放す
+要按下试试吗，你只有一次机会。	Would you like to press it? You only have one chance.	押してみますか。チャンスは一度だけです。
+观察时翻页或关闭软件，会暂停退化，但是只有点击“离开”才能恢复生长	Turning the page or closing the app pauses the regression. Only tapping Leave allows growth to resume.	観察中にページをめくるかアプリを閉じると退化は止まりますが、「離れる」を押すまで成長は再開しません
+请稍候。	Please wait.	しばらくお待ちください。
+请输入0至8000之间的整数年龄	Enter a whole-number age from 0 to 8000.	0から8000までの整数で年齢を入力してください
+读%ld本书	Read %ld books	本を%ld冊読む
+跟随系统	Use system time zone	システムに合わせる
+这台设备没有可用相机	This device has no available camera.	このデバイスには利用できるカメラがありません
+这是Kurio的原始动机生成器，每次点击都会从词库中随机拼接成一组全新短语。一共有11390625种可能性。每条短语只会出现一次（如果你设置为一秒一组连续播放，那么大约能连续播放131天），所以点击的时候希望不要太快，以免错过什么。	This is Kurio’s Original Motivation Generator. Each tap assembles a new phrase from its word banks. There are 11,390,625 possibilities. Each combination appears only once (at one phrase per second, that is about 131 days of continuous playback). Please do not tap too quickly, in case you miss something.	これはKurioの原始動機生成器です。タップするたびに語彙から言葉をランダムに組み合わせ、新しいフレーズを作ります。組み合わせは全部で11,390,625通り。一つの組み合わせは一度しか現れません（1秒に一つの連続再生なら、約131日間続きます）。何かを見逃さないよう、あまり急いでタップしないでください。
+进入	Enter	入る
+进入一张空白页面	Enter a blank page	白紙のページに入る
+进入一片空白，也需要被允许吗。	Do we need permission to enter a blank space, too?	何もない場所に入るにも、許可が必要なのでしょうか。
+重新申请	Apply again	もう一度申請する
+重新考虑我的生命	Reconsider my life	自分の人生を考え直す
+需要相机权限才能取景	Camera access is needed for the viewfinder.	ファインダーを表示するにはカメラへのアクセスが必要です
+预期寿命，1至8000岁	Expected lifespan, 1 to 8000 years	予想する寿命、1歳から8000歳

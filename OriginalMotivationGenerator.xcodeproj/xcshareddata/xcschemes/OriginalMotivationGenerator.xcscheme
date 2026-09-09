@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E00000000000000000000001"
-               BuildableName = "原始动机生成器.app"
-               BlueprintName = "原始动机生成器"
+               BuildableName = "墨尔本草稿.app"
+               BlueprintName = "墨尔本草稿"
                ReferencedContainer = "container:OriginalMotivationGenerator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E00000000000000000000001"
-            BuildableName = "原始动机生成器.app"
-            BlueprintName = "原始动机生成器"
+            BuildableName = "墨尔本草稿.app"
+            BlueprintName = "墨尔本草稿"
             ReferencedContainer = "container:OriginalMotivationGenerator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -59,8 +59,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E00000000000000000000001"
-            BuildableName = "原始动机生成器.app"
-            BlueprintName = "原始动机生成器"
+            BuildableName = "墨尔本草稿.app"
+            BlueprintName = "墨尔本草稿"
             ReferencedContainer = "container:OriginalMotivationGenerator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

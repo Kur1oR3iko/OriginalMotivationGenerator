@@ -16,25 +16,30 @@ jobs:
 
       - name: Check 25-hour clock calendar
         run: |
-          swiftc App/Clock25.swift Tests/Clock25Tests.swift -o "$RUNNER_TEMP/omg-clock-tests"
+          swiftc App/Localization.swift App/Clock25.swift Tests/Clock25Tests.swift -o "$RUNNER_TEMP/omg-clock-tests"
           "$RUNNER_TEMP/omg-clock-tests"
 
       - name: Check one-time press persistence
         run: |
-          swiftc App/OncePressStore.swift Tests/OncePressStoreTests.swift -o "$RUNNER_TEMP/omg-once-tests"
+          swiftc App/Localization.swift App/OncePressStore.swift Tests/OncePressStoreTests.swift -o "$RUNNER_TEMP/omg-once-tests"
           "$RUNNER_TEMP/omg-once-tests"
 
       - name: Check death clock assumptions and persistence
         run: |
-          swiftc App/DeathClock.swift Tests/DeathClockTests.swift -o "$RUNNER_TEMP/omg-death-tests"
+          swiftc App/Localization.swift App/DeathClock.swift Tests/DeathClockTests.swift -o "$RUNNER_TEMP/omg-death-tests"
           "$RUNNER_TEMP/omg-death-tests"
 
       - name: Check breathing, dormancy and application behavior
         run: |
-          swiftc App/InteractiveArtModels.swift Tests/InteractiveArtTests.swift -o "$RUNNER_TEMP/omg-interactive-art-tests"
+          swiftc App/Localization.swift App/InteractiveArtModels.swift Tests/InteractiveArtTests.swift -o "$RUNNER_TEMP/omg-interactive-art-tests"
           "$RUNNER_TEMP/omg-interactive-art-tests"
 
-      - name: Build for iOS Simulator
+      - name: Check localization coverage and language fallback
+        run: |
+          swiftc App/Localization.swift App/KurioPhraseGenerator.swift Tests/LocalizationTests.swift -o "$RUNNER_TEMP/omg-localization-tests"
+          "$RUNNER_TEMP/omg-localization-tests"
+
+      - name: Build localized app for iOS Simulator
         run: >-
           xcodebuild
           -project OriginalMotivationGenerator.xcodeproj

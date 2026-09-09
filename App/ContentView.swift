@@ -23,8 +23,8 @@ struct ContentView: View {
     @AppStorage("originalMotivationGenerator.v1.clockShowsSeconds") private var clockShowsSeconds = true
     @AppStorage("originalMotivationGenerator.v1.clockTimeZone") private var clockTimeZone = "system"
     @State private var phrase = KurioPhraseGenerator.lastPhrase ?? KurioPhraseGenerator.next()
-    @State private var showingSettings = false
-    @State private var selectedPage: ArtPage = .phrase
+    @State private var showingSettings = CaptureConfiguration.showsSettings
+    @State private var selectedPage: ArtPage = ArtPage(rawValue: CaptureConfiguration.pageIndex) ?? .phrase
     @State private var horizontalStep = 1
     @State private var showsPageIndicator = false
     @State private var indicatorPulse = 0
@@ -42,7 +42,7 @@ struct ContentView: View {
     @State private var isEditingText = false
     @State private var generation = 0
 
-    private var phraseText: String { phrase?.text ?? "全部组合已生成完毕" }
+    private var phraseText: String { phrase?.text ?? L("全部组合已生成完毕") }
 
     var body: some View {
         GeometryReader { proxy in
@@ -95,10 +95,10 @@ struct ContentView: View {
                 return
             }
         }
-        .accessibilityAction(named: "下一页") { turnPage(.up) }
-        .accessibilityAction(named: "上一页") { turnPage(.down) }
-        .accessibilityAction(named: "下一个功能") { turnPage(.left) }
-        .accessibilityAction(named: "上一个功能") { turnPage(.right) }
+        .accessibilityAction(named: L("下一页")) { turnPage(.up) }
+        .accessibilityAction(named: L("上一页")) { turnPage(.down) }
+        .accessibilityAction(named: L("下一个功能")) { turnPage(.left) }
+        .accessibilityAction(named: L("上一个功能")) { turnPage(.right) }
         .task(id: isTurningPage) {
             guard isTurningPage else { return }
             do {
@@ -146,7 +146,7 @@ struct ContentView: View {
         .opacity(showsPageIndicator ? 1 : 0)
         .allowsHitTesting(false)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("第\(current.rawValue + 1)页，共\(ArtPage.allCases.count)页，\(current.title)")
+        .accessibilityLabel(L("第%ld页，共%ld页，%@", current.rawValue + 1, ArtPage.allCases.count, current.title))
         .accessibilityHidden(!showsPageIndicator)
     }
 
@@ -168,7 +168,7 @@ struct ContentView: View {
             case (.once, false):
                 OncePressView(store: onceStore, timeZoneIdentifier: clockTimeZone)
             case (.once, true):
-                ArtIntroductionView(title: "只能按一次", introduction: "要按下试试吗，你只有一次机会。", footnote: "也许你已经按过了")
+                ArtIntroductionView(title: L("只能按一次"), introduction: L("要按下试试吗，你只有一次机会。"), footnote: L("也许你已经按过了"))
             case (.application, false):
                 ApplicationView(store: application,
                                 isActive: selectedPage == .application && !showingSettings && !isTurningPage && scenePhase == .active) { editing in
@@ -196,7 +196,7 @@ struct ContentView: View {
             case (.notTaken, false):
                 UnrecordedCameraView(camera: unrecordedCamera, isActive: cameraActive)
             case (.notTaken, true):
-                ArtIntroductionView(title: "没有拍下", introduction: "你决定记录下这一刻")
+                ArtIntroductionView(title: L("没有拍下"), introduction: L("你决定记录下这一刻"))
             case (.dormancy, false):
                 DormancyArtView(store: dormancy, sceneID: sceneID, isActive: dormancyVisible)
             case (.dormancy, true):
@@ -212,14 +212,14 @@ struct ContentView: View {
                         Image(systemName: feature.offset(by: 1).symbol)
                             .frame(width: 44, height: 44)
                     }
-                    .accessibilityLabel("切换到\(feature.offset(by: 1).title)")
+                    .accessibilityLabel(L("切换到%@", feature.offset(by: 1).title))
                     .keyboardShortcut(.rightArrow, modifiers: .command)
 
                     Button { turnPage(.up) } label: {
                         Image(systemName: settings ? "house" : "gearshape")
                             .frame(width: 44, height: 44)
                     }
-                    .accessibilityLabel(settings ? "切换到主页" : "打开设置")
+                    .accessibilityLabel(settings ? L("切换到主页") : L("打开设置"))
                     .keyboardShortcut(",", modifiers: .command)
                 }
                 .font(.title3)
@@ -294,10 +294,19 @@ struct ContentView: View {
                     Group {
                         if let phrase {
                             HStack(spacing: 0) {
-                                animatedWord(phrase.verb, movesUp: true)
-                                animatedWord(phrase.adjective, movesUp: false)
-                                Text("的")
-                                animatedWord(phrase.noun, movesUp: true)
+                                animatedWord(phrase.words[0], movesUp: true)
+                                if L10n.language == .english {
+                                    Text("the").padding(.horizontal, fontSize * 0.25)
+                                } else {
+                                    Text(phrase.separators[0])
+                                }
+                                animatedWord(phrase.words[1], movesUp: false)
+                                if L10n.language == .english {
+                                    Color.clear.frame(width: fontSize * 0.25, height: 1)
+                                } else {
+                                    Text(phrase.separators[1])
+                                }
+                                animatedWord(phrase.words[2], movesUp: true)
                             }
                         } else {
                             Text(phraseText)
@@ -315,9 +324,9 @@ struct ContentView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel("生成原始动机")
+                .accessibilityLabel(L("生成原始动机"))
                 .accessibilityValue(phraseText)
-                .accessibilityAction(named: "打开设置") { turnPage(.up) }
+                .accessibilityAction(named: L("打开设置")) { turnPage(.up) }
             }
         }
     }

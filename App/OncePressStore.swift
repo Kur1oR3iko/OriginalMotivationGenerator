@@ -44,7 +44,7 @@ final class OncePressStore: ObservableObject {
             }
             return true
         } catch {
-            errorMessage = "暂时无法保存按下记录，请稍后再试。"
+            errorMessage = L("暂时无法保存按下记录，请稍后再试。")
             return false
         }
     }
@@ -56,7 +56,7 @@ final class OncePressStore: ObservableObject {
         } catch {
             // Never treat a damaged or inaccessible existing record as an unused opportunity.
             unreadableRecord = true
-            errorMessage = "无法读取已有的按下记录。"
+            errorMessage = L("无法读取已有的按下记录。")
         }
     }
 }

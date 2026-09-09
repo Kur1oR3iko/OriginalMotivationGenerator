@@ -35,7 +35,8 @@ enum DeathClock {
         let homecomings: Int
 
         var activities: String {
-            "度过\(weekends)个周末，享受\(summers)个夏天，吃\(breakfasts)顿早餐，读\(books)本书，回\(homecomings)次老家"
+            [L("度过%ld个周末", weekends), L("享受%ld个夏天", summers), L("吃%ld顿早餐", breakfasts),
+             L("读%ld本书", books), L("回%ld次老家", homecomings)].joined(separator: "、")
         }
     }
 

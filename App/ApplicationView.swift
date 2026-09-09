@@ -22,7 +22,7 @@ struct ApplicationView: View {
                         .transition(.opacity)
                 case .entered:
                     Color.white
-                        .accessibilityLabel("申请已通过，你已进入一张空白页面")
+                        .accessibilityLabel(L("申请已通过，你已进入一张空白页面"))
                 }
             }
         }
@@ -61,26 +61,26 @@ struct ApplicationView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: compact ? 16 : 28) {
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("申请表")
+                            Text(L("申请表"))
                                 .font(AppTypography.displayFont(size: wide ? 60 : 38))
                                 .accessibilityAddTraits(.isHeader)
-                            Text("进入一张空白页面")
+                            Text(L("进入一张空白页面"))
                                 .font(.system(size: wide ? 22 : 18))
                         }
                         .padding(.bottom, compact ? 0 : 8)
                         VStack(alignment: .leading, spacing: 6) {
-                            fieldLabel("申请人")
-                            TextField("你的名字", text: $store.applicant)
+                            fieldLabel(L("申请人"))
+                            TextField(L("你的名字"), text: $store.applicant)
                                 .font(.system(size: wide ? 24 : 20))
                                 .textFieldStyle(.plain)
                                 .focused($applicantFocused)
                                 .submitLabel(.next)
                                 .onSubmit { editor.view?.becomeFirstResponder() }
                                 .frame(minHeight: 36)
-                                .accessibilityLabel("申请人")
+                                .accessibilityLabel(L("申请人"))
                         }
                         VStack(alignment: .leading, spacing: 6) {
-                            fieldLabel("申请理由")
+                            fieldLabel(L("申请理由"))
                             ApplicationTextEditor(text: $store.reason, bridge: editor, fontSize: wide ? 24 : 20) { editing in
                                 onEditingChanged(editing)
                                 if editing {
@@ -92,7 +92,7 @@ struct ApplicationView: View {
                             .frame(height: wide ? 150 : 82)
                             .overlay(alignment: .topLeading) {
                                 if store.reason.isEmpty {
-                                    Text("为什么想要进去")
+                                    Text(L("为什么想要进去"))
                                         .font(.system(size: wide ? 24 : 20))
                                         .foregroundStyle(Color(white: 0.7))
                                         .padding(.top, 6)
@@ -115,7 +115,7 @@ struct ApplicationView: View {
                     if store.submit() { AppSoundPlayer.shared.play(.send) }
                 } label: {
                     HStack {
-                        Text("提交")
+                        Text(L("提交"))
                         Spacer(minLength: 8)
                         Image(systemName: "arrow.right")
                     }
@@ -127,7 +127,7 @@ struct ApplicationView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!store.canSubmit)
-                .accessibilityLabel("提交申请")
+                .accessibilityLabel(L("提交申请"))
             }
             .frame(width: wide ? 174 : 114)
         }
@@ -143,21 +143,21 @@ struct ApplicationView: View {
 
     private func decision(in size: CGSize) -> some View {
         VStack(alignment: .leading, spacing: 28) {
-            Text("进入一张空白页面")
+            Text(L("进入一张空白页面"))
                 .font(.body).foregroundStyle(.secondary)
-            Text(store.stage == .waiting ? "申请已收到" : "申请已通过")
+            Text(store.stage == .waiting ? L("申请已收到") : L("申请已通过"))
                 .font(AppTypography.displayFont(size: size.width >= 900 ? 60 : 38))
                 .id(store.stage)
                 .transition(.opacity)
                 .accessibilityAddTraits(.isHeader)
             if store.stage == .waiting {
-                Text("请稍候。")
+                Text(L("请稍候。"))
                     .font(.title3).foregroundStyle(.secondary)
                     .frame(height: 52)
             } else {
                 Button { store.enter() } label: {
                     HStack(spacing: 28) {
-                        Text("进入")
+                        Text(L("进入"))
                         Image(systemName: "arrow.right")
                     }
                     .font(.title3.weight(.medium))
@@ -182,8 +182,8 @@ struct ApplicationSettingsView: View {
     let startAgain: () -> Void
 
     var body: some View {
-        ArtSettingsLayout(title: "申请", introduction: "进入一片空白，也需要被允许吗。") {
-            Button("重新申请", action: startAgain)
+        ArtSettingsLayout(title: L("申请"), introduction: L("进入一片空白，也需要被允许吗。")) {
+            Button(L("重新申请"), action: startAgain)
                 .font(.title2.weight(.medium))
                 .frame(minHeight: 44)
                 .buttonStyle(.plain)
@@ -213,10 +213,10 @@ private struct ApplicationTextEditor: UIViewRepresentable {
         view.delegate = context.coordinator
         view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        view.accessibilityLabel = "申请理由"
+        view.accessibilityLabel = L("申请理由")
         let toolbar = UIToolbar()
         toolbar.items = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-                         UIBarButtonItem(title: "完成", style: .done, target: context.coordinator, action: #selector(Coordinator.finishEditing))]
+                         UIBarButtonItem(title: L("完成"), style: .done, target: context.coordinator, action: #selector(Coordinator.finishEditing))]
         toolbar.sizeToFit()
         view.inputAccessoryView = toolbar
         bridge.view = view

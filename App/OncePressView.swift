@@ -11,10 +11,10 @@ struct OncePressView: View {
                 if let record = store.record {
                     let clock = Clock25.reading(at: record.date, timeZone: record.timeZone)
                     VStack(spacing: 24) {
-                        Text("于\(civilTime(record))按下")
+                        Text(L("于%@按下", civilTime(record)))
                             .font(.system(size: min(max(proxy.size.width * 0.032, 20), 36), weight: .semibold))
                             .fixedSize(horizontal: false, vertical: true)
-                        Text("或者说是\(clock.dateText) \(String(format: "%02d:%02d:%02d", clock.hour, clock.minute, clock.second))")
+                        Text(L("或者说是%@ %@", clock.dateText, clock.timeTextWithSeconds))
                             .font(.system(size: min(max(proxy.size.width * 0.019, 15), 23), weight: .medium))
                             .foregroundStyle(Color(white: 0.45))
                             .lineLimit(1)
@@ -33,8 +33,8 @@ struct OncePressView: View {
                         Circle().fill(Color.black).frame(width: 108, height: 108)
                     }
                     .buttonStyle(OnceButtonStyle())
-                    .accessibilityLabel("只能按一次")
-                    .accessibilityHint("按下后按钮将永久消失")
+                    .accessibilityLabel(L("只能按一次"))
+                    .accessibilityHint(L("按下后按钮将永久消失"))
                     if let error = store.errorMessage {
                         Text(error).font(.footnote).foregroundStyle(.secondary)
                     }
@@ -50,9 +50,9 @@ struct OncePressView: View {
     private func civilTime(_ record: OncePressStore.Record) -> String {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = Locale(identifier: "zh_CN")
+        formatter.locale = L10n.locale
         formatter.timeZone = record.timeZone
-        formatter.dateFormat = "yyyy年M月d日HH时mm分ss秒"
+        formatter.dateFormat = L("yyyy年M月d日HH时mm分ss秒")
         return formatter.string(from: record.date)
     }
 }

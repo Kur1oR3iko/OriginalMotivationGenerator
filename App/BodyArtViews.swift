@@ -26,10 +26,10 @@ struct BreathArtView: View {
             }
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("呼吸，已留下\(store.marks.count)条线")
+        .accessibilityLabel(L("呼吸，已留下%ld条线", store.marks.count))
         .accessibilityHint(store.errorMessage ?? "")
-        .accessibilityAction(named: "开始吸气", beginInhale)
-        .accessibilityAction(named: "结束吸气", endInhale)
+        .accessibilityAction(named: L("开始吸气"), beginInhale)
+        .accessibilityAction(named: L("结束吸气"), endInhale)
         .onAppear { if isActive { BreathHaptics.shared.prepare() } }
         .onChange(of: isActive) { active in
             if active { BreathHaptics.shared.prepare() }
@@ -146,10 +146,10 @@ struct BreathSettingsView: View {
     @ObservedObject var store: BreathStore
 
     var body: some View {
-        ArtSettingsLayout(title: "呼吸", introduction: "吸气时按住屏幕，呼气时松开。") {
-            Text("每次呼吸留下一条灰线。新的线向上叠加，满屏时最早的一条离开。")
+        ArtSettingsLayout(title: L("呼吸"), introduction: L("吸气时按住屏幕，呼气时松开。")) {
+            Text(L("每次呼吸留下一条灰线。新的线向上叠加，满屏时最早的一条离开。"))
                 .font(.body).foregroundStyle(.secondary)
-            Button("舍弃") { store.discard() }
+            Button(L("舍弃")) { store.discard() }
                 .font(.title2.weight(.medium))
                 .frame(minHeight: 44)
                 .buttonStyle(.plain)

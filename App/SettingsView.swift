@@ -13,13 +13,13 @@ enum FlowInterval: Double, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .halfSecond: return "0.5秒"
-        case .oneSecond: return "1秒"
-        case .fiveSeconds: return "5秒"
-        case .tenSeconds: return "10秒"
-        case .thirtySeconds: return "30秒"
-        case .oneMinute: return "1分钟"
-        case .fiveMinutes: return "5分钟"
+        case .halfSecond: return L("0.5秒")
+        case .oneSecond: return L("1秒")
+        case .fiveSeconds: return L("5秒")
+        case .tenSeconds: return L("10秒")
+        case .thirtySeconds: return L("30秒")
+        case .oneMinute: return L("1分钟")
+        case .fiveMinutes: return L("5分钟")
         }
     }
 }
@@ -36,7 +36,7 @@ struct SettingsView: View {
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: wideLayout ? 48 : 32) {
-                    Text("kurio最新力作（2）")
+                    Text(L("kurio最新力作（2）"))
                         .font(.system(size: wideLayout ? titleSize : titleSize * 0.75,
                                       weight: .black, design: .rounded))
                         .fixedSize(horizontal: false, vertical: true)
@@ -68,15 +68,15 @@ struct SettingsView: View {
 
     private var introduction: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("原始动机生成器")
+            Text(L("原始动机生成器"))
                 .font(.title2.bold())
                 .accessibilityAddTraits(.isHeader)
-            Text("这是Kurio的原始动机生成器，每次点击都会从词库中随机拼接成一组全新短语。一共有11390625种可能性。每条短语只会出现一次（如果你设置为一秒一组连续播放，那么大约能连续播放131天），所以点击的时候希望不要太快，以免错过什么。")
+            Text(L("这是Kurio的原始动机生成器，每次点击都会从词库中随机拼接成一组全新短语。一共有11390625种可能性。每条短语只会出现一次（如果你设置为一秒一组连续播放，那么大约能连续播放131天），所以点击的时候希望不要太快，以免错过什么。"))
                 .font(.body)
                 .lineSpacing(6)
                 .foregroundStyle(Color(white: 0.35))
                 .fixedSize(horizontal: false, vertical: true)
-            Text("注意：原始动机短语不涉及任何具体操作")
+            Text(L("注意：原始动机短语不涉及任何具体操作"))
                 .font(.subheadline)
                 .lineSpacing(4)
                 .foregroundStyle(.secondary)
@@ -87,13 +87,13 @@ struct SettingsView: View {
     private var playbackControls: some View {
         VStack(alignment: .leading, spacing: 20) {
             Toggle(isOn: $autoAdvanceEnabled) {
-                Text("时间的流速")
+                Text(L("时间的流速"))
                     .font(.title2.bold())
             }
             .toggleStyle(.switch)
             .tint(.black)
 
-            Text("切换间隔")
+            Text(L("切换间隔"))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
@@ -104,7 +104,7 @@ struct SettingsView: View {
                 }
             }
 
-            Text("开启后，按所选节奏自动切换。\n点击短语生成下一条，并停止自动切换。查看设置或离开应用时暂停。")
+            Text(L("开启后，按所选节奏自动切换。\n点击短语生成下一条，并停止自动切换。查看设置或离开应用时暂停。"))
                 .font(.subheadline)
                 .lineSpacing(5)
                 .foregroundStyle(Color(white: 0.35))

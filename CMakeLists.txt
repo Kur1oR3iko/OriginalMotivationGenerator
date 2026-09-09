@@ -10,6 +10,7 @@ set(APP_ROOT "${CMAKE_SOURCE_DIR}/App")
 set(APP_SOURCES
     "${APP_ROOT}/OriginalMotivationGeneratorApp.swift"
     "${APP_ROOT}/ContentView.swift"
+    "${APP_ROOT}/Localization.swift"
     "${APP_ROOT}/ArtPage.swift"
     "${APP_ROOT}/InteractiveArtModels.swift"
     "${APP_ROOT}/SingleTouchSurface.swift"
@@ -44,16 +45,23 @@ set_source_files_properties(
     PROPERTIES MACOSX_PACKAGE_LOCATION Resources
 )
 add_executable(OriginalMotivationGenerator ${APP_SOURCES})
+foreach(APP_LANGUAGE IN ITEMS en ja zh-Hans)
+    foreach(APP_TABLE IN ITEMS Localizable Lexicon InfoPlist)
+        set(APP_STRINGS "${APP_ROOT}/${APP_LANGUAGE}.lproj/${APP_TABLE}.strings")
+        target_sources(OriginalMotivationGenerator PRIVATE "${APP_STRINGS}")
+        set_source_files_properties("${APP_STRINGS}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${APP_LANGUAGE}.lproj")
+    endforeach()
+endforeach()
 target_link_libraries(OriginalMotivationGenerator PRIVATE "-framework SwiftUI" "-framework UIKit" "-framework AVFoundation" "-framework CoreHaptics")
 
 set_target_properties(OriginalMotivationGenerator PROPERTIES
     MACOSX_BUNDLE TRUE
-    OUTPUT_NAME "原始动机生成器"
+    OUTPUT_NAME "墨尔本草稿"
     XCODE_GENERATE_SCHEME TRUE
     MACOSX_BUNDLE_INFO_PLIST "${APP_ROOT}/Info.plist"
     XCODE_ATTRIBUTE_INFOPLIST_FILE "${APP_ROOT}/Info.plist"
     XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${OMG_BUNDLE_IDENTIFIER}"
-    XCODE_ATTRIBUTE_PRODUCT_NAME "原始动机生成器"
+    XCODE_ATTRIBUTE_PRODUCT_NAME "墨尔本草稿"
     XCODE_ATTRIBUTE_MARKETING_VERSION "1.0.0"
     XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION "1"
     XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "15.0"

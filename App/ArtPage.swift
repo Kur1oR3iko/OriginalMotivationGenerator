@@ -6,14 +6,14 @@ enum ArtPage: Int, CaseIterable, Identifiable {
     var id: Int { rawValue }
     var title: String {
         switch self {
-        case .phrase: return "原始动机生成器"
-        case .clock: return "25小时时钟"
-        case .once: return "只能按一次"
-        case .application: return "申请"
-        case .death: return "死之钟"
-        case .breath: return "呼吸"
-        case .notTaken: return "没有拍下"
-        case .dormancy: return "休眠"
+        case .phrase: return L("原始动机生成器")
+        case .clock: return L("25小时时钟")
+        case .once: return L("只能按一次")
+        case .application: return L("申请")
+        case .death: return L("死之钟")
+        case .breath: return L("呼吸")
+        case .notTaken: return L("没有拍下")
+        case .dormancy: return L("休眠")
         }
     }
     var symbol: String {

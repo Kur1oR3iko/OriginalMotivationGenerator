@@ -50,11 +50,11 @@ struct DeathClockView: View {
 
     private func ageQuestion(largeLayout: Bool) -> some View {
         VStack(spacing: largeLayout ? 38 : 28) {
-            Text("您今年多少岁了")
+            Text(L("您今年多少岁了"))
                 .font(.system(size: largeLayout ? 48 : 34, weight: .bold))
                 .accessibilityAddTraits(.isHeader)
             HStack(spacing: 12) {
-                TextField("年龄", text: $store.ageText)
+                TextField(L("年龄"), text: $store.ageText)
                     .font(.system(size: largeLayout ? 68 : 48, weight: .semibold))
                     .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
@@ -62,16 +62,16 @@ struct DeathClockView: View {
                     .submitLabel(.continue)
                     .onSubmit(confirmAge)
                     .frame(width: largeLayout ? 240 : 180)
-                    .accessibilityLabel("当前年龄")
-                Text("岁")
+                    .accessibilityLabel(L("当前年龄"))
+                Text(L("岁"))
                     .font(.system(size: largeLayout ? 30 : 22, weight: .regular))
                     .foregroundStyle(.secondary)
             }
             if !store.ageText.isEmpty && store.age == nil {
-                Text("请输入0至8000之间的整数年龄")
+                Text(L("请输入0至8000之间的整数年龄"))
                     .font(.footnote).foregroundStyle(.secondary)
             }
-            Button("继续", action: confirmAge)
+            Button(L("继续"), action: confirmAge)
                 .font(.system(size: largeLayout ? 27 : 20, weight: .semibold))
                 .frame(minWidth: largeLayout ? 120 : 88, minHeight: largeLayout ? 56 : 44)
                 .buttonStyle(.plain)
@@ -88,14 +88,14 @@ struct DeathClockView: View {
 
     private func expectancyQuestion(height: CGFloat, largeLayout: Bool) -> some View {
         VStack(spacing: largeLayout ? 22 : 16) {
-            Text("您的预期寿命是？")
+            Text(L("您的预期寿命是？"))
                 .font(.system(size: largeLayout ? 48 : 34, weight: .bold))
                 .accessibilityAddTraits(.isHeader)
             LifespanWheel(value: $store.expectancy)
                 .frame(width: largeLayout ? 360 : 260,
                        height: min(largeLayout ? 300 : 216, max(110, height * (largeLayout ? 0.46 : 0.4))))
                 .clipped()
-            Button("确定") {
+            Button(L("确定")) {
                 store.confirmExpectancy(reduceMotion: reduceMotion)
             }
             .font(.system(size: largeLayout ? 27 : 20, weight: .semibold))
@@ -110,43 +110,43 @@ struct DeathClockView: View {
         switch profile.outcome {
         case .ghost:
             VStack(spacing: largeLayout ? 26 : 18) {
-                Text("欢迎你，鬼魂先生/女生")
+                Text(L("欢迎你，鬼魂先生/女生"))
                     .font(.system(size: largeLayout ? 54 : 38, weight: .bold))
                     .fixedSize(horizontal: false, vertical: true)
-                Text("享受接下来额外的人生吧")
+                Text(L("享受接下来额外的人生吧"))
                     .font(.system(size: largeLayout ? 28 : 20))
                     .foregroundStyle(Color(white: 0.45))
                     .fixedSize(horizontal: false, vertical: true)
             }
         case .ancient:
-            Text("想不到能在这里遇见你，大蝽。")
+            Text(L("想不到能在这里遇见你，大蝽。"))
                 .font(.system(size: largeLayout ? 54 : 38, weight: .bold))
                 .fixedSize(horizontal: false, vertical: true)
         case .countdown:
             let remaining = DeathClock.remaining(for: profile, at: now, southernHemisphere: southernHemisphere)
             VStack(spacing: largeLayout ? 28 : 18) {
-                Text("您的一生还剩下：")
+                Text(L("您的一生还剩下："))
                     .font(.system(size: largeLayout ? 31 : 22, weight: .medium))
-                Text("\(String(remaining.days))天")
+                Text(L("%ld天", remaining.days))
                     .font(.system(size: largeLayout ? 112 : 76, weight: .heavy))
                     .lineLimit(1)
                     .minimumScaleFactor(0.35)
                     .monospacedDigit()
-                Text("在这段时间你还可以：")
+                Text(L("在这段时间你还可以："))
                     .font(.system(size: largeLayout ? 31 : 22, weight: .medium))
                 HStack(alignment: .top, spacing: largeLayout ? 140 : 95) {
                     VStack(alignment: .leading, spacing: largeLayout ? 18 : 12) {
-                        activity("度过", remaining.weekends, "个周末", largeLayout: largeLayout)
-                        activity("吃", remaining.breakfasts, "顿早餐", largeLayout: largeLayout)
-                        activity("回", remaining.homecomings, "次老家", largeLayout: largeLayout)
+                        activity(L("度过%ld个周末", remaining.weekends), largeLayout: largeLayout)
+                        activity(L("吃%ld顿早餐", remaining.breakfasts), largeLayout: largeLayout)
+                        activity(L("回%ld次老家", remaining.homecomings), largeLayout: largeLayout)
                     }
                     VStack(alignment: .leading, spacing: largeLayout ? 18 : 12) {
-                        activity("享受", remaining.summers, "个夏天", largeLayout: largeLayout)
-                        activity("读", remaining.books, "本书", largeLayout: largeLayout)
-                        Text("与那个人再见一定的次数")
+                        activity(L("享受%ld个夏天", remaining.summers), largeLayout: largeLayout)
+                        activity(L("读%ld本书", remaining.books), largeLayout: largeLayout)
+                        Text(L("与那个人再见一定的次数"))
                             .font(.system(size: largeLayout ? 28 : 20))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.65)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.75)
                             .multilineTextAlignment(.leading)
                     }
                 }
@@ -155,8 +155,8 @@ struct DeathClockView: View {
         }
     }
 
-    private func activity(_ verb: String, _ count: Int, _ unit: String, largeLayout: Bool) -> some View {
-        (Text(verb) + Text(String(count)).fontWeight(.semibold) + Text(unit))
+    private func activity(_ text: String, largeLayout: Bool) -> some View {
+        Text(text)
             .font(.system(size: largeLayout ? 28 : 20))
             .lineLimit(1)
             .minimumScaleFactor(0.65)
@@ -172,7 +172,7 @@ private struct LifespanWheel: UIViewRepresentable {
         let picker = UIPickerView()
         picker.dataSource = context.coordinator
         picker.delegate = context.coordinator
-        picker.accessibilityLabel = "预期寿命，1至8000岁"
+        picker.accessibilityLabel = L("预期寿命，1至8000岁")
         return picker
     }
 
@@ -190,7 +190,7 @@ private struct LifespanWheel: UIViewRepresentable {
         func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
         func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int { 8000 }
         func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat { 44 }
-        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { "\(row + 1)岁" }
+        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? { L("%ld岁", row + 1) }
         func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) { parent.value = row + 1 }
     }
 }
@@ -204,14 +204,14 @@ struct DeathClockSettingsView: View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 32) {
-                    Text("死之钟")
+                    Text(L("死之钟"))
                         .font(.system(size: geometry.size.width >= 900 ? titleSize : titleSize * 0.75, weight: .black, design: .rounded))
-                    Text("关于活着的其他一些想法")
+                    Text(L("关于活着的其他一些想法"))
                         .font(.title3)
-                    Toggle("按南半球计算夏天", isOn: $southernHemisphere)
+                    Toggle(L("按南半球计算夏天"), isOn: $southernHemisphere)
                         .font(.title2.weight(.medium))
                         .toggleStyle(.switch)
-                    Button("重新考虑我的生命", action: onRestart)
+                    Button(L("重新考虑我的生命"), action: onRestart)
                         .font(.title2.weight(.medium))
                         .frame(minHeight: 44)
                         .buttonStyle(.plain)

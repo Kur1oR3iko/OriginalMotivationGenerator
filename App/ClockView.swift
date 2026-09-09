@@ -39,7 +39,7 @@ struct ClockView: View {
                     .tracking(size * 0.02)
                     .lineLimit(1)
                     .minimumScaleFactor(0.3)
-                    .accessibilityLabel("25小时时钟，\(reading.hour)点\(reading.minute)分" + (showsSeconds ? "\(reading.second)秒" : ""))
+                    .accessibilityLabel(L("25小时时钟") + ", " + (showsSeconds ? reading.timeTextWithSeconds : reading.timeText))
                 if showsDate {
                     Text(reading.dateText)
                         .font(AppTypography.clockFont(size: max(min(size * 0.16, 36), 16)))

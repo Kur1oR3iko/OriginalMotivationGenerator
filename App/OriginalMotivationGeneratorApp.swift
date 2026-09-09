@@ -4,10 +4,13 @@ import Combine
 
 @main
 struct OriginalMotivationGeneratorApp: App {
+    init() { CaptureConfiguration.prepare() }
+
     var body: some Scene {
         WindowGroup {
             KeyboardNavigationHost()
                 .preferredColorScheme(.light)
+                .environment(\.locale, L10n.locale)
         }
     }
 }

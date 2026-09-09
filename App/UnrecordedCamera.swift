@@ -128,7 +128,7 @@ struct UnrecordedCameraView: View {
                     Image(systemName: "camera").font(.system(size: 36, weight: .light))
                     Text(statusText).font(.body).multilineTextAlignment(.center)
                     if camera.status == .denied {
-                        Button("打开相机权限设置") {
+                        Button(L("打开相机权限设置")) {
                             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
                             UIApplication.shared.open(url)
                         }
@@ -143,7 +143,7 @@ struct UnrecordedCameraView: View {
                     .font(.system(size: 100, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
                     .shadow(color: .black.opacity(0.6), radius: 8)
-                    .accessibilityLabel("倒计时\(number)")
+                    .accessibilityLabel(L("倒计时%ld", number))
             }
             VStack {
                 Spacer()
@@ -156,7 +156,7 @@ struct UnrecordedCameraView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(camera.status != .ready || camera.isShuttering || !isActive)
-                .accessibilityLabel("快门，三秒后拍照")
+                .accessibilityLabel(L("快门，三秒后拍照"))
                 .padding(.bottom, 24)
             }
             Color.white.opacity(camera.flash ? 1 : 0)
@@ -169,11 +169,11 @@ struct UnrecordedCameraView: View {
 
     private var statusText: String {
         switch camera.status {
-        case .idle, .preparing: return "相机准备中"
+        case .idle, .preparing: return L("相机准备中")
         case .ready: return ""
-        case .denied: return "需要相机权限才能取景"
-        case .unavailable: return "这台设备没有可用相机"
-        case .failed: return "相机暂时无法使用，请稍后再试"
+        case .denied: return L("需要相机权限才能取景")
+        case .unavailable: return L("这台设备没有可用相机")
+        case .failed: return L("相机暂时无法使用，请稍后再试")
         }
     }
 }

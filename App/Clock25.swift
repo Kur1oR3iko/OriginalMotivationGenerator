@@ -15,7 +15,7 @@ enum Clock25 {
 
         var timeText: String { String(format: "%02d:%02d", hour, minute) }
         var timeTextWithSeconds: String { String(format: "%02d:%02d:%02d", hour, minute, second) }
-        var dateText: String { "\(year)年\(month)月\(day)日" }
+        var dateText: String { L("%ld年%ld月%ld日", year, month, day) }
     }
 
     struct MonthLayout: Equatable {

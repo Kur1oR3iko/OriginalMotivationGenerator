@@ -1,6 +1,10 @@
-# 原始动机生成器
+# 墨尔本草稿 / Melbourne Drafts / メルボルン草稿
 
-从 `emu98` 关于页彩蛋中独立出来的 iOS / iPadOS SwiftUI App。它保留原始的 225 个动词、225 个形容词和 225 个名词，以及遍历全部 11,390,625 种组合且不重复的生成算法。
+关于时间、身体、语言与观看的八件离线互动作品，使用 SwiftUI 构建，支持 iOS、iPadOS 和 Apple 芯片 Mac。短语作品从 `emu98` 关于页彩蛋中独立而来，保留225个动词、225个形容词、225个名词，以及遍历全部11,390,625种组合且不重复的生成算法。
+
+根据设备首选语言自动选择界面：中文（包括简体与繁体语言偏好）使用简体中文，日文使用日文，其余使用英文。三个语言版本包含全部界面、辅助功能、日期格式与675个短语词条。短语以中文作为稳定存储形式，切换语言不会重置生成进度；日文使用形容词、名词、动词的自然词序。翻译源文件在 `Localization/`，执行 `python3 scripts/build_localizations.py` 生成标准 `.strings` 资源。
+
+截图使用专用 Simulator 和以 `.screenshots` 结尾的独立调试包。`--capture --capture-page 0` 等参数只在 DEBUG 的截图包内启用样例数据，正式构建不可启用，也不读写正式包的个人记录。
 
 应用启动后以横屏显示白底黑字短语，点击屏幕任意位置生成下一条。界面会根据 iPhone 或 iPad 的安全区和可用宽度自动调整字号，并始终保持单行。
 
@@ -56,20 +60,20 @@ cmake -S . -B build -G Xcode -DOMG_DEVELOPMENT_TEAM=你的团队ID
 时钟换算回归检查（不需要模拟器）：
 
 ```sh
-swiftc App/Clock25.swift Tests/Clock25Tests.swift -o /tmp/omg-clock-tests
+swiftc App/Localization.swift App/Clock25.swift Tests/Clock25Tests.swift -o /tmp/omg-clock-tests
 /tmp/omg-clock-tests
 ```
 
 一次性记录持久化检查（使用独立临时目录，不消耗应用内的机会）：
 
 ```sh
-swiftc App/OncePressStore.swift Tests/OncePressStoreTests.swift -o /tmp/omg-once-tests
+swiftc App/Localization.swift App/OncePressStore.swift Tests/OncePressStoreTests.swift -o /tmp/omg-once-tests
 /tmp/omg-once-tests
 ```
 
 呼吸边界、休眠生命周期及申请状态检查：
 
 ```sh
-swiftc App/InteractiveArtModels.swift Tests/InteractiveArtTests.swift -o /tmp/omg-interactive-art-tests
+swiftc App/Localization.swift App/InteractiveArtModels.swift Tests/InteractiveArtTests.swift -o /tmp/omg-interactive-art-tests
 /tmp/omg-interactive-art-tests
 ```

@@ -6,7 +6,25 @@ enum KurioPhraseGenerator {
         let adjective: String
         let noun: String
 
-        var text: String { verb + adjective + "的" + noun }
+        var canonicalText: String { verb + adjective + "的" + noun }
+        var words: [String] {
+            let v = L10n.word(verb, kind: "verb")
+            let a = L10n.word(adjective, kind: "adjective")
+            let n = L10n.word(noun, kind: "noun")
+            switch L10n.language {
+            case .chinese: return [v, a, n]
+            case .english: return [v.prefix(1).uppercased() + v.dropFirst(), a, n]
+            case .japanese: return [a, n, v]
+            }
+        }
+        var separators: [String] {
+            switch L10n.language {
+            case .chinese: return ["", "的"]
+            case .english: return [" the ", " "]
+            case .japanese: return ["", "を"]
+            }
+        }
+        var text: String { words[0] + separators[0] + words[1] + separators[1] + words[2] }
     }
 
     private static let poolSize = 225
@@ -63,7 +81,7 @@ enum KurioPhraseGenerator {
         defaults.set(cursor + 1, forKey: cursorKey)
 
         let phrase = Phrase(verb: verbs[verbIndex], adjective: adjectives[adjectiveIndex], noun: nouns[nounIndex])
-        defaults.set(phrase.text, forKey: lastPhraseKey)
+        defaults.set(phrase.canonicalText, forKey: lastPhraseKey)
         return phrase
     }
 

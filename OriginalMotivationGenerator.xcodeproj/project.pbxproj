@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        A00000000000000000000032 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000032; };
+        A00000000000000000000033 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000033; };
+        A00000000000000000000034 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000034; };
+        A00000000000000000000035 /* Lexicon.strings in Resources */ = {isa = PBXBuildFile; fileRef = C00000000000000000000035; };
 		A00000000000000000000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000001 /* ContentView.swift */; };
 		A00000000000000000000002 /* KurioPhraseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000002 /* KurioPhraseGenerator.swift */; };
 		A00000000000000000000003 /* OriginalMotivationGeneratorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */; };
@@ -37,13 +41,23 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+        B00000000000000000000032 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+        B00000000000000000000040 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+        B00000000000000000000041 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+        B00000000000000000000042 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+        B00000000000000000000043 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+        B00000000000000000000044 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+        B00000000000000000000045 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+        B00000000000000000000046 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Lexicon.strings; sourceTree = "<group>"; };
+        B00000000000000000000047 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Lexicon.strings; sourceTree = "<group>"; };
+        B00000000000000000000048 = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Lexicon.strings"; sourceTree = "<group>"; };
 		B00000000000000000000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B00000000000000000000002 /* KurioPhraseGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KurioPhraseGenerator.swift; sourceTree = "<group>"; };
 		B00000000000000000000003 /* OriginalMotivationGeneratorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalMotivationGeneratorApp.swift; sourceTree = "<group>"; };
 		B00000000000000000000004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B00000000000000000000005 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B00000000000000000000006 /* IconSource.svg */ = {isa = PBXFileReference; lastKnownFileType = image.svg; path = IconSource.svg; sourceTree = "<group>"; };
-		B00000000000000000000007 /* 原始动机生成器.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "原始动机生成器.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00000000000000000000007 /* 墨尔本草稿.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "墨尔本草稿.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B00000000000000000000008 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B00000000000000000000009 /* ThreeFingerSwipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeFingerSwipe.swift; sourceTree = "<group>"; };
 		B00000000000000000000010 /* Clock25.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clock25.swift; sourceTree = "<group>"; };
@@ -100,6 +114,10 @@
                 B00000000000000000000029 /* DormancyViews.swift */,
                 B00000000000000000000030 /* BreathHaptics.swift */,
                 B00000000000000000000031 /* GardenEcology.swift */,
+                B00000000000000000000032 /* Localization.swift */,
+                C00000000000000000000033 /* Localizable.strings */,
+                C00000000000000000000034 /* InfoPlist.strings */,
+                C00000000000000000000035 /* Lexicon.strings */,
                 B00000000000000000000023 /* DeathClock.swift */,
                 B00000000000000000000024 /* DeathClockView.swift */,
 				B00000000000000000000022 /* tick.wav */,
@@ -127,7 +145,7 @@
 		C00000000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B00000000000000000000007 /* 原始动机生成器.app */,
+				B00000000000000000000007 /* 墨尔本草稿.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -135,9 +153,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E00000000000000000000001 /* 原始动机生成器 */ = {
+		E00000000000000000000001 /* 墨尔本草稿 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = H00000000000000000000002 /* Build configuration list for PBXNativeTarget "原始动机生成器" */;
+			buildConfigurationList = H00000000000000000000002 /* Build configuration list for PBXNativeTarget "墨尔本草稿" */;
 			buildPhases = (
 				D00000000000000000000002 /* Sources */,
 				D00000000000000000000001 /* Frameworks */,
@@ -147,12 +165,18 @@
 			);
 			dependencies = (
 			);
-			name = "原始动机生成器";
+			name = "墨尔本草稿";
 			productName = OriginalMotivationGenerator;
-			productReference = B00000000000000000000007 /* 原始动机生成器.app */;
+			productReference = B00000000000000000000007 /* 墨尔本草稿.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
+
+/* Begin PBXVariantGroup section */
+        C00000000000000000000033 = {isa = PBXVariantGroup; children = (B00000000000000000000040, B00000000000000000000041, B00000000000000000000042); name = Localizable.strings; sourceTree = "<group>"; };
+        C00000000000000000000034 = {isa = PBXVariantGroup; children = (B00000000000000000000043, B00000000000000000000044, B00000000000000000000045); name = InfoPlist.strings; sourceTree = "<group>"; };
+        C00000000000000000000035 = {isa = PBXVariantGroup; children = (B00000000000000000000046, B00000000000000000000047, B00000000000000000000048); name = Lexicon.strings; sourceTree = "<group>"; };
+/* End PBXVariantGroup section */
 
 /* Begin PBXProject section */
 		F00000000000000000000001 /* Project object */ = {
@@ -169,19 +193,20 @@
 			};
 			buildConfigurationList = H00000000000000000000001 /* Build configuration list for PBXProject "OriginalMotivationGenerator" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = zh_CN;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
-				zh_CN,
+				"zh-Hans",
+				ja,
 			);
 			mainGroup = C00000000000000000000001;
 			productRefGroup = C00000000000000000000003 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E00000000000000000000001 /* 原始动机生成器 */,
+				E00000000000000000000001 /* 墨尔本草稿 */,
 			);
 		};
 /* End PBXProject section */
@@ -191,6 +216,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+                A00000000000000000000033,
+                A00000000000000000000034,
+                A00000000000000000000035,
 				A00000000000000000000004 /* Assets.xcassets in Resources */,
 				A00000000000000000000022 /* tick.wav in Resources */,
 				A00000000000000000000021 /* send.wav in Resources */,
@@ -215,6 +243,7 @@
                 A00000000000000000000029 /* DormancyViews.swift in Sources */,
                 A00000000000000000000030 /* BreathHaptics.swift in Sources */,
                 A00000000000000000000031 /* GardenEcology.swift in Sources */,
+                A00000000000000000000032 /* Localization.swift in Sources */,
                 A00000000000000000000023 /* DeathClock.swift in Sources */,
                 A00000000000000000000024 /* DeathClockView.swift in Sources */,
 				A00000000000000000000018 /* AppSoundPlayer.swift in Sources */,
@@ -283,7 +312,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kurio.original-motivation-generator";
-				PRODUCT_NAME = "原始动机生成器";
+				PRODUCT_NAME = "墨尔本草稿";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -306,7 +335,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kurio.original-motivation-generator";
-				PRODUCT_NAME = "原始动机生成器";
+				PRODUCT_NAME = "墨尔本草稿";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -326,7 +355,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		H00000000000000000000002 /* Build configuration list for PBXNativeTarget "原始动机生成器" */ = {
+		H00000000000000000000002 /* Build configuration list for PBXNativeTarget "墨尔本草稿" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				G00000000000000000000003 /* Debug */,

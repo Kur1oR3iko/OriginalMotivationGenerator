@@ -17,11 +17,11 @@ struct ClockSettingsView: View {
     private static let commonZones = ["Etc/UTC", "Asia/Shanghai", "Asia/Tokyo", "Asia/Kolkata",
                                       "Australia/Melbourne", "Europe/London", "Europe/Paris",
                                       "America/New_York", "America/Los_Angeles"]
-    private static let cityNames = ["Etc/UTC": "协调世界时", "Asia/Shanghai": "北京 / 上海",
-                                    "Asia/Tokyo": "东京", "Asia/Kolkata": "印度",
-                                    "Australia/Melbourne": "墨尔本", "Europe/London": "伦敦",
-                                    "Europe/Paris": "巴黎", "America/New_York": "纽约",
-                                    "America/Los_Angeles": "洛杉矶"]
+    private static let cityNames = ["Etc/UTC": L("协调世界时"), "Asia/Shanghai": L("北京 / 上海"),
+                                    "Asia/Tokyo": L("东京"), "Asia/Kolkata": L("印度"),
+                                    "Australia/Melbourne": L("墨尔本"), "Europe/London": L("伦敦"),
+                                    "Europe/Paris": L("巴黎"), "America/New_York": L("纽约"),
+                                    "America/Los_Angeles": L("洛杉矶")]
     private static let allZones = Array(Set(TimeZone.knownTimeZoneIdentifiers + commonZones)).sorted()
 
     var body: some View {
@@ -29,7 +29,7 @@ struct ClockSettingsView: View {
             let wideLayout = proxy.size.width >= 900
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: wideLayout ? 48 : 32) {
-                    Text("25小时时钟")
+                    Text(L("25小时时钟"))
                         .font(.system(size: wideLayout ? titleSize : titleSize * 0.75,
                                       weight: .black, design: .rounded))
                         .accessibilityAddTraits(.isHeader)
@@ -60,19 +60,19 @@ struct ClockSettingsView: View {
 
     private var displayControls: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Toggle("显示年月日", isOn: $showsDate)
+            Toggle(L("显示年月日"), isOn: $showsDate)
                 .font(.title2.bold())
                 .toggleStyle(.switch)
-            Toggle("显示秒钟", isOn: $showsSeconds)
+            Toggle(L("显示秒钟"), isOn: $showsSeconds)
                 .font(.title2.bold())
                 .toggleStyle(.switch)
             TimelineView(.periodic(from: .now, by: 1)) { context in
                 let reading = Clock25.reading(at: context.date, timeZone: Clock25.timeZone(for: timeZoneIdentifier))
                 ClockMonthCalendar(reading: reading)
             }
-            Text("每天多一个小时。")
+            Text(L("每天多一个小时。"))
                 .font(.title3.weight(.medium))
-            Text("从2000年1月1日00:00 UTC开始计时。一分钟仍是60秒，一小时仍是60分钟，一天是25小时。每周7天，每年12个月，月长与闰年遵循公历。")
+            Text(L("从2000年1月1日00:00 UTC开始计时。一分钟仍是60秒，一小时仍是60分钟，一天是25小时。每周7天，每年12个月，月长与闰年遵循公历。"))
                 .font(.body)
                 .lineSpacing(6)
                 .foregroundStyle(Color(white: 0.35))
@@ -82,7 +82,7 @@ struct ClockSettingsView: View {
 
     private func zoneControls(viewportHeight: CGFloat) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("时区")
+            Text(L("时区"))
                 .font(.title2.bold())
                 .accessibilityAddTraits(.isHeader)
             zoneButton("system")
@@ -98,7 +98,7 @@ struct ClockSettingsView: View {
             } label: {
                 HStack(spacing: 16) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("其他时区")
+                        Text(L("其他时区"))
                             .font(.body.weight(timeZoneIdentifier == "system" ? .regular : .bold))
                         if timeZoneIdentifier != "system" {
                             Text(zoneTitle(timeZoneIdentifier))
@@ -118,12 +118,12 @@ struct ClockSettingsView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("其他时区")
-            .accessibilityValue(showsOtherTimeZones ? "已展开" : "已收起")
+            .accessibilityLabel(L("其他时区"))
+            .accessibilityValue(showsOtherTimeZones ? L("已展开") : L("已收起"))
             .accessibilityAddTraits(timeZoneIdentifier == "system" ? [] : .isSelected)
 
             if showsOtherTimeZones {
-                TextField("搜索城市或时区", text: $search)
+                TextField(L("搜索城市或时区"), text: $search)
                     .focused($isSearching)
                     .submitLabel(.done)
                     .onSubmit { isSearching = false }
@@ -132,7 +132,7 @@ struct ClockSettingsView: View {
                     .padding(.vertical, 12)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-                    .accessibilityLabel("搜索时区")
+                    .accessibilityLabel(L("搜索时区"))
                 ScrollView {
                     LazyVStack(spacing: 8) {
                         ForEach(visibleZones, id: \.self) { identifier in
@@ -140,14 +140,14 @@ struct ClockSettingsView: View {
                                 .frame(minHeight: zoneRowHeight)
                         }
                         if search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                            Button(showsAllTimeZones ? "显示常用时区" : "查看全部时区") {
+                            Button(showsAllTimeZones ? L("显示常用时区") : L("查看全部时区")) {
                                 showsAllTimeZones.toggle()
                             }
                             .font(.subheadline.weight(.semibold))
                             .frame(maxWidth: .infinity, minHeight: zoneRowHeight, alignment: .leading)
                             .buttonStyle(.plain)
                         } else if visibleZones.isEmpty {
-                            Text("没有匹配的时区")
+                            Text(L("没有匹配的时区"))
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                                 .frame(maxWidth: .infinity, minHeight: zoneRowHeight, alignment: .leading)
@@ -193,9 +193,9 @@ struct ClockSettingsView: View {
     }
 
     private func zoneTitle(_ identifier: String) -> String {
-        if identifier == "system" { return "跟随系统" }
+        if identifier == "system" { return L("跟随系统") }
         if let city = Self.cityNames[identifier] { return city }
-        let localizedName = TimeZone(identifier: identifier)?.localizedName(for: .generic, locale: Locale(identifier: "zh_CN"))
+        let localizedName = TimeZone(identifier: identifier)?.localizedName(for: .generic, locale: L10n.locale)
         return localizedName.map { "\($0) · \(identifier)" } ?? identifier
     }
 
@@ -251,9 +251,9 @@ private struct ClockMonthCalendar: View {
 
         var title: String {
             switch self {
-            case .days: return "日"
-            case .months: return "月"
-            case .years: return "年"
+            case .days: return L("日")
+            case .months: return L("月")
+            case .years: return L("年")
             }
         }
     }
@@ -263,7 +263,7 @@ private struct ClockMonthCalendar: View {
     @State private var scale: Scale = .days
     @State private var browsedYear: Int?
     @State private var browsedMonth: Int?
-    private let weekdays = ["一", "二", "三", "四", "五", "六", "日"]
+    private let weekdays = L10n.weekdays
     private let dayColumns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
     private let overviewColumns = Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
 
@@ -272,9 +272,9 @@ private struct ClockMonthCalendar: View {
     private var firstYear: Int { (year / 10) * 10 }
     private var header: String {
         switch scale {
-        case .days: return "\(year)年\(month)月"
-        case .months: return "\(year)年"
-        case .years: return "\(firstYear)–\(firstYear + 11)年"
+        case .days: return L("%ld年%@", year, L10n.monthName(month))
+        case .months: return L("%ld年", year)
+        case .years: return L("%ld–%ld年", firstYear, firstYear + 11)
         }
     }
 
@@ -292,13 +292,13 @@ private struct ClockMonthCalendar: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("日历范围，\(header)")
-                .accessibilityValue("\(scale.title)视图")
-                .accessibilityHint("点击切换到\(scale.next.title)视图")
+                .accessibilityLabel(L("日历范围，%@", header))
+                .accessibilityValue(L("%@视图", scale.title))
+                .accessibilityHint(L("点击切换到%@视图", scale.next.title))
                 .accessibilityIdentifier("calendarScaleButton")
                 Spacer()
                 if year != reading.year || month != reading.month {
-                    Button("当前日期") {
+                    Button(L("当前日期")) {
                         browsedYear = nil
                         browsedMonth = nil
                         scale = .days
@@ -306,7 +306,7 @@ private struct ClockMonthCalendar: View {
                     .font(.subheadline)
                     .buttonStyle(.plain)
                 } else {
-                    Text("\(reading.day)日 · 星期\(weekdays[(reading.weekday + 5) % 7])")
+                    Text(L("%ld日 · %@", reading.day, weekdays[(reading.weekday + 5) % 7]))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -318,7 +318,7 @@ private struct ClockMonthCalendar: View {
                 case .months:
                     LazyVGrid(columns: overviewColumns, spacing: 12) {
                         ForEach(1...12, id: \.self) { month in
-                            overviewCell("\(month)月", selected: year == reading.year && month == reading.month) {
+                            overviewCell(L10n.monthName(month), selected: year == reading.year && month == reading.month) {
                                 browsedMonth = month
                                 scale = .days
                             }
@@ -351,7 +351,7 @@ private struct ClockMonthCalendar: View {
                     .font(.caption.weight(.medium))
                     .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity)
-                    .accessibilityLabel("星期\(weekdays[index])")
+                    .accessibilityLabel(weekdays[index])
             }
             ForEach(0..<(layout.leadingEmptyDays + layout.numberOfDays), id: \.self) { index in
                 if index < layout.leadingEmptyDays {
@@ -367,7 +367,7 @@ private struct ClockMonthCalendar: View {
                         .background {
                             if selected { Circle().fill(Color.black).frame(width: 36, height: 36) }
                         }
-                        .accessibilityLabel(selected ? "\(reading.dateText)，当前日期" : "\(day)日")
+                        .accessibilityLabel(selected ? L("%@，当前日期", reading.dateText) : L("%ld日", day))
                 }
             }
         }
